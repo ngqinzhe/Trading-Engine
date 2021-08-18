@@ -9,6 +9,29 @@ namespace TradingEngineServer.Orders
         public long Price { get; set; }
         public OrderbookEntry Head { get; set; }
         public OrderbookEntry Tail { get; set; }
+        public uint GetLevelOrderCount()
+        {
+            uint orderCount = 0;
+            OrderbookEntry headPointer = Head;
+            while (headPointer != null)
+            {
+                if (headPointer.Current.CurrentQuantity != 0)
+                    orderCount++;
+                headPointer = headPointer.Next;
+            }
+            return orderCount;
+        }
+        public uint GetLevelOrderQuantity()
+        {
+            uint orderQuantity = 0;
+            OrderbookEntry headPointer = Head;
+            while (headPointer != null)
+            {
+                orderQuantity += headPointer.Current.CurrentQuantity;
+                headPointer = headPointer.Next;
+            }
+            return orderQuantity;
+        }
         public bool IsEmpty
         {
             get
