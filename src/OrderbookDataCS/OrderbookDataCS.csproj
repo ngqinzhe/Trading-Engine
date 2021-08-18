@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9</LangVersion>
+    <RootNamespace>TradingEngineServer.OrderbookData</RootNamespace>
+    <AssemblyName>TradingEngineServer.OrderbookData</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InstrumentCS\InstrumentCS.csproj" />
+    <ProjectReference Include="..\OrdersCS\OrdersCS.csproj" />
+    <ProjectReference Include="..\PriceCS\PriceCS.csproj" />
+  </ItemGroup>
+
+</Project>
