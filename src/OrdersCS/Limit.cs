@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TradingEngineServer.Orderbook
+namespace TradingEngineServer.Orders
 {
     public class Limit
     {
