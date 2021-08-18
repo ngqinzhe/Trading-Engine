@@ -26,11 +26,11 @@ namespace OrderbookCSTest
 
             var (matchResult, obResult) = prorataOrderbook.Match();
 
-            Assert.AreEqual(matchResult.Fills.Count, 2);
-            Assert.AreEqual(matchResult.Trades.Count, 1);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(askOrderOrderId), false);
+            Assert.AreEqual(2, matchResult.Fills.Count);
+            Assert.AreEqual(1, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(askOrderOrderId));
         }
 
         [TestMethod]
@@ -47,11 +47,11 @@ namespace OrderbookCSTest
 
             var (matchResult, obResult) = prorataOrderbook.Match();
 
-            Assert.AreEqual(matchResult.Fills.Count, 2);
-            Assert.AreEqual(matchResult.Trades.Count, 1);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(buyOrderOrderId), true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(askOrderOrderId), false);
+            Assert.AreEqual(2, matchResult.Fills.Count);
+            Assert.AreEqual(1, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(true, prorataOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(askOrderOrderId));
         }
 
         [TestMethod]
@@ -73,12 +73,12 @@ namespace OrderbookCSTest
             // Asks wiped out.
             var (matchResult, obResult) = prorataOrderbook.Match();
 
-            Assert.AreEqual(matchResult.Fills.Count, 4);
-            Assert.AreEqual(matchResult.Trades.Count, 2);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(buyOrderOrderId), true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(askOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(secondbuyOrderOrderId), false);
+            Assert.AreEqual(4, matchResult.Fills.Count);
+            Assert.AreEqual(2, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(true, prorataOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(secondbuyOrderOrderId));
         }
 
         [TestMethod]
@@ -100,14 +100,14 @@ namespace OrderbookCSTest
             var (matchResult, obResult) = prorataOrderbook.Match();
             var spread = prorataOrderbook.GetSpread();
 
-            Assert.AreEqual(matchResult.Fills.Count, 4);
-            Assert.AreEqual(matchResult.Trades.Count, 2);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(askOrderOrderId), true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(secondbuyOrderOrderId), false);
-            Assert.AreEqual(spread.Ask.Value, askPrice);
-            Assert.AreEqual(spread.Bid.HasValue, false);
+            Assert.AreEqual(4, matchResult.Fills.Count);
+            Assert.AreEqual(2, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(true, prorataOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(secondbuyOrderOrderId));
+            Assert.AreEqual(askPrice, spread.Ask.Value);
+            Assert.AreEqual(false, spread.Bid.HasValue);
         }
 
         [TestMethod]
@@ -131,14 +131,14 @@ namespace OrderbookCSTest
             var (matchResult, obResult) = prorataOrderbook.Match();
             var spread = prorataOrderbook.GetSpread();
 
-            Assert.AreEqual(matchResult.Fills.Count, 4);
-            Assert.AreEqual(matchResult.Trades.Count, 2);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(askOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(secondbuyOrderOrderId), true);
-            Assert.AreEqual(spread.Bid.Value, bidPrice);
-            Assert.AreEqual(spread.Ask.HasValue, false);
+            Assert.AreEqual(4, matchResult.Fills.Count);
+            Assert.AreEqual(2, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(true, prorataOrderbook.ContainsOrder(secondbuyOrderOrderId));
+            Assert.AreEqual(bidPrice, spread.Bid.Value);
+            Assert.AreEqual(false, spread.Ask.HasValue);
         }
 
         [TestMethod]
@@ -164,15 +164,15 @@ namespace OrderbookCSTest
             var (matchResult, obResult) = prorataOrderbook.Match();
             var spread = prorataOrderbook.GetSpread();
 
-            Assert.AreEqual(matchResult.Fills.Count, 6);
-            Assert.AreEqual(matchResult.Trades.Count, 3);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(askOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(secondbuyOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(secondAskOrderOrderId), false);
-            Assert.AreEqual(spread.Ask.HasValue, false);
-            Assert.AreEqual(spread.Bid.HasValue, false);
+            Assert.AreEqual(6, matchResult.Fills.Count);
+            Assert.AreEqual(3, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(secondbuyOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(secondAskOrderOrderId));
+            Assert.AreEqual(false, spread.Ask.HasValue);
+            Assert.AreEqual(false, spread.Bid.HasValue);
         }
 
         [TestMethod]
@@ -203,17 +203,17 @@ namespace OrderbookCSTest
             var (matchResult, obResult) = prorataOrderbook.Match();
             var spread = prorataOrderbook.GetSpread();
 
-            Assert.AreEqual(matchResult.Fills.Count, 6);
-            Assert.AreEqual(matchResult.Trades.Count, 3);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(askOrderOrderId), true);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(secondbuyOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(secondAskOrderOrderId), false);
-            Assert.AreEqual(prorataOrderbook.ContainsOrder(thirdBuyOrderId), true);
-            Assert.AreEqual(spread.Ask.HasValue, true);
-            Assert.AreEqual(spread.Bid.HasValue, true);
-            Assert.AreEqual(spread.Spread.Value, 1);
+            Assert.AreEqual(6, matchResult.Fills.Count);
+            Assert.AreEqual(3, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(true, prorataOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(secondbuyOrderOrderId));
+            Assert.AreEqual(false, prorataOrderbook.ContainsOrder(secondAskOrderOrderId));
+            Assert.AreEqual(true, prorataOrderbook.ContainsOrder(thirdBuyOrderId));
+            Assert.AreEqual(true, spread.Ask.HasValue);
+            Assert.AreEqual(true, spread.Bid.HasValue);
+            Assert.AreEqual(1, spread.Spread.Value);
         }
     }
 }
