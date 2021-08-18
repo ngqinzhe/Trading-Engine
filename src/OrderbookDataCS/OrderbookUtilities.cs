@@ -15,7 +15,7 @@ namespace TradingEngineServer.OrderbookData
 
             uint orderCount = limit.GetLevelOrderCount();
             uint orderQuantity = limit.GetLevelOrderQuantity();
-            bool containsSingleOrder = orderQuantity == 1;
+            bool containsSingleOrder = orderCount == 1;
             long price = limit.IsEmpty ? PriceConstants.InvalidPrice : limit.Price;
             int securityId = limit.IsEmpty ? SecurityConstants.InvalidSecurityId : headEntry.Current.SecurityId;
             IncrementalOrderbookUpdateType updateType = limit.IsEmpty ? IncrementalOrderbookUpdateType.Delete :
