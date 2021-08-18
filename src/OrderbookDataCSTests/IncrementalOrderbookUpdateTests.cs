@@ -11,7 +11,7 @@ namespace OrderbookDataCSTests
     public class IncrementalOrderbookUpdateTests
     {
         [TestMethod]
-        public void OrderbookLevelDeleted_UpdateTypeDelete()
+        public void OrderbookLevel_UpdateType_Delete()
         {
             // Empty limit (empty price level with no orderbook entries)
             var limit = new Limit();
@@ -25,7 +25,7 @@ namespace OrderbookDataCSTests
         }
 
         [TestMethod]
-        public void OrderbookLevelDeleted_UpdateTypeNew()
+        public void OrderbookLevel_UpdateType_New()
         {
             const long price = 10;
             const int securityId = 1;
@@ -53,7 +53,7 @@ namespace OrderbookDataCSTests
         }
 
         [TestMethod]
-        public void OrderbookLevelDeleted_UpdateTypeChange()
+        public void OrderbookLevel_UpdateType_Change()
         {
             const long price = 10;
             const int securityId = 1;
