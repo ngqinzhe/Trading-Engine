@@ -25,7 +25,7 @@ namespace TradingEngineServer.OrderbookData
             long price = limit.IsEmpty ? PriceConstants.InvalidPrice : limit.Price;
             int securityId = limit.IsEmpty ? SecurityConstants.InvalidSecurityId : headEntry.Current.SecurityId;
 
-            bool singleOrderOnLevel = headEntry != null && limit.Head == limit.Tail;
+            bool singleOrderOnLevel = !limit.IsEmpty && limit.Head == limit.Tail;
             IncrementalOrderbookUpdateType updateType = limit.IsEmpty ? IncrementalOrderbookUpdateType.Delete :
                 singleOrderOnLevel ? IncrementalOrderbookUpdateType.New : 
                 IncrementalOrderbookUpdateType.Change;
