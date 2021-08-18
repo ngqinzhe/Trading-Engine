@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TradingEngineServer.OrderbookData
 {
@@ -11,5 +12,6 @@ namespace TradingEngineServer.OrderbookData
         public uint Quantity { get; set; }
         public long Price { get; set; }
         public uint OrderCount { get; set; }
+        public List<IncrementalOrderbookUpdateEntry> IncrementalOrderbookUpdateEntries { get; set; }
     }
 }

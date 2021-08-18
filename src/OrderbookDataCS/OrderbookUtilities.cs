@@ -19,10 +19,10 @@ namespace TradingEngineServer.OrderbookData
             long price = limit.IsEmpty ? PriceConstants.InvalidPrice : limit.Price;
             int securityId = limit.IsEmpty ? SecurityConstants.InvalidSecurityId : headEntry.Current.SecurityId;
             IncrementalOrderbookUpdateType updateType = limit.IsEmpty ? IncrementalOrderbookUpdateType.Delete :
-                containsSingleOrder ? IncrementalOrderbookUpdateType.New : 
+                containsSingleOrder ? IncrementalOrderbookUpdateType.New :
                 IncrementalOrderbookUpdateType.Change;
-            OrderbookEntryType entryType = limit.Side == Side.Unknown ? OrderbookEntryType.Null : 
-                limit.Side == Side.Bid ? OrderbookEntryType.Bid : 
+            OrderbookEntryType entryType = limit.Side == Side.Unknown ? OrderbookEntryType.Null :
+                limit.Side == Side.Bid ? OrderbookEntryType.Bid :
                 OrderbookEntryType.Ask;
 
             return new IncrementalOrderbookUpdate()
@@ -34,7 +34,22 @@ namespace TradingEngineServer.OrderbookData
                 OrderCount = orderCount,
                 Price = price,
                 Quantity = orderQuantity,
+                IncrementalOrderbookUpdateEntries = GenerateIncrementalOrderbookUpdateEntries(limit),
             };
+        }
+
+        private static List<IncrementalOrderbookUpdateEntry> GenerateIncrementalOrderbookUpdateEntries(Limit limit)
+        {
+            var orderMetaDatas = limit.GetLevelOrderMetaData();
+            List<IncrementalOrderbookUpdateEntry> orderbookUpdateEntries = new List<IncrementalOrderbookUpdateEntry>(orderMetaDatas.Count);
+            foreach (var orderMeta in orderMetaDatas)
+                orderbookUpdateEntries.Add(new IncrementalOrderbookUpdateEntry(AnonymizeOrderId(orderMeta.OrderId), orderMeta.Quantity));
+            return orderbookUpdateEntries;
+        }
+
+        private static long AnonymizeOrderId(long orderId)
+        {
+            return orderId.GetHashCode();
         }
     }
 }

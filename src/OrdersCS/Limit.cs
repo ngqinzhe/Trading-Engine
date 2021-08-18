@@ -32,6 +32,22 @@ namespace TradingEngineServer.Orders
             }
             return orderQuantity;
         }
+        public List<OrderbookEntryData> GetLevelOrderMetaData()
+        {
+            List<OrderbookEntryData> orderMetaData = new List<OrderbookEntryData>();
+            OrderbookEntry headPointer = Head;
+            while (headPointer != null)
+            {
+                if (headPointer.Current.CurrentQuantity != 0)
+                    orderMetaData.Add(new OrderbookEntryData()
+                    {
+                        OrderId = headPointer.Current.OrderId,
+                        Quantity = headPointer.Current.CurrentQuantity,
+                    });
+                headPointer = headPointer.Next;
+            }
+            return orderMetaData;
+        }
         public bool IsEmpty
         {
             get

@@ -23,6 +23,7 @@ namespace OrderbookDataCSTests
             Assert.AreEqual(0u, incrementalOrderbookUpdate.OrderCount);
             Assert.AreEqual(PriceConstants.InvalidPrice, incrementalOrderbookUpdate.Price);
             Assert.AreEqual(0u, incrementalOrderbookUpdate.Quantity);
+            Assert.AreEqual(0, incrementalOrderbookUpdate.IncrementalOrderbookUpdateEntries.Count);
         }
 
         [TestMethod]
@@ -41,6 +42,7 @@ namespace OrderbookDataCSTests
             Assert.AreEqual(1u, incrementalOrderbookUpdate.OrderCount);
             Assert.AreEqual(price, incrementalOrderbookUpdate.Price);
             Assert.AreEqual(10u, incrementalOrderbookUpdate.Quantity);
+            Assert.AreEqual(1, incrementalOrderbookUpdate.IncrementalOrderbookUpdateEntries.Count);
         }
 
         [TestMethod]
@@ -59,6 +61,7 @@ namespace OrderbookDataCSTests
             Assert.AreEqual(2u, incrementalOrderbookUpdate.OrderCount);
             Assert.AreEqual(price, incrementalOrderbookUpdate.Price);
             Assert.AreEqual(15u, incrementalOrderbookUpdate.Quantity);
+            Assert.AreEqual(2, incrementalOrderbookUpdate.IncrementalOrderbookUpdateEntries.Count);
         }
 
         private static Limit CreateLimitWithOneEntry(long price, int securityId, bool isBuySide)
