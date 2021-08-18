@@ -22,11 +22,11 @@ namespace TradingEngineServer.OrderbookData
                 headEntryPointer = headEntryPointer.Next;
             }
 
-            long price = headEntry == null ? PriceConstants.InvalidPrice : headEntry.ParentLimit.Price;
-            int securityId = headEntry == null ? SecurityConstants.InvalidSecurityId : headEntry.Current.SecurityId;
+            long price = limit.IsEmpty ? PriceConstants.InvalidPrice : limit.Price;
+            int securityId = limit.IsEmpty ? SecurityConstants.InvalidSecurityId : headEntry.Current.SecurityId;
 
-            bool singleOrderOnLevel = headEntry != null && headEntry.ParentLimit.Head == headEntry.ParentLimit.Tail;
-            IncrementalOrderbookUpdateType updateType = headEntry == null ? IncrementalOrderbookUpdateType.Delete :
+            bool singleOrderOnLevel = headEntry != null && limit.Head == limit.Tail;
+            IncrementalOrderbookUpdateType updateType = limit.IsEmpty ? IncrementalOrderbookUpdateType.Delete :
                 singleOrderOnLevel ? IncrementalOrderbookUpdateType.New : 
                 IncrementalOrderbookUpdateType.Change;
 
