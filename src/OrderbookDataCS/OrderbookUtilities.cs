@@ -17,7 +17,9 @@ namespace TradingEngineServer.OrderbookData
 
             while (headEntryPointer != null)
             {
-                orderCount++;
+                uint currentQuantity = headEntryPointer.Current.CurrentQuantity;
+                if (currentQuantity != 0)
+                    orderCount++;
                 levelQuantity += headEntryPointer.Current.CurrentQuantity;
                 headEntryPointer = headEntryPointer.Next;
             }
