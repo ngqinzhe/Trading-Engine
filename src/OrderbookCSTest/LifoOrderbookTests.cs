@@ -28,11 +28,11 @@ namespace OrderbookCSTest
 
             var (matchResult, obResult) = LifoOrderbook.Match();
 
-            Assert.AreEqual(matchResult.Fills.Count, 2);
-            Assert.AreEqual(matchResult.Trades.Count, 1);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(askOrderOrderId), false);
+            Assert.AreEqual(2, matchResult.Fills.Count);
+            Assert.AreEqual(1, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(askOrderOrderId));
         }
 
         [TestMethod]
@@ -49,11 +49,11 @@ namespace OrderbookCSTest
 
             var (matchResult, obResult) = LifoOrderbook.Match();
 
-            Assert.AreEqual(matchResult.Fills.Count, 2);
-            Assert.AreEqual(matchResult.Trades.Count, 1);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(buyOrderOrderId), true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(askOrderOrderId), false);
+            Assert.AreEqual(2, matchResult.Fills.Count);
+            Assert.AreEqual(1, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(true, LifoOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(askOrderOrderId));
         }
 
         [TestMethod]
@@ -74,12 +74,12 @@ namespace OrderbookCSTest
             // Asks wiped out.
             var (matchResult, obResult) = LifoOrderbook.Match();
 
-            Assert.AreEqual(matchResult.Fills.Count, 4);
-            Assert.AreEqual(matchResult.Trades.Count, 2);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(buyOrderOrderId), true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(askOrderOrderId), false);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(secondbuyOrderOrderId), false);
+            Assert.AreEqual(4, matchResult.Fills.Count);
+            Assert.AreEqual(2, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(true, LifoOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(secondbuyOrderOrderId));
         }
 
         [TestMethod]
@@ -101,14 +101,14 @@ namespace OrderbookCSTest
             var (matchResult, obResult) = LifoOrderbook.Match();
             var spread = LifoOrderbook.GetSpread();
 
-            Assert.AreEqual(matchResult.Fills.Count, 4);
-            Assert.AreEqual(matchResult.Trades.Count, 2);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(askOrderOrderId), true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(secondbuyOrderOrderId), false);
-            Assert.AreEqual(spread.Ask.Value, askPrice);
-            Assert.AreEqual(spread.Bid.HasValue, false);
+            Assert.AreEqual(4, matchResult.Fills.Count);
+            Assert.AreEqual(2, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(true, LifoOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(secondbuyOrderOrderId));
+            Assert.AreEqual(askPrice, spread.Ask.Value);
+            Assert.AreEqual(false, spread.Bid.HasValue);
         }
 
         [TestMethod]
@@ -134,15 +134,15 @@ namespace OrderbookCSTest
             var (matchResult, obResult) = LifoOrderbook.Match();
             var spread = LifoOrderbook.GetSpread();
 
-            Assert.AreEqual(matchResult.Fills.Count, 6);
-            Assert.AreEqual(matchResult.Trades.Count, 3);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(askOrderOrderId), false);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(secondbuyOrderOrderId), false);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(secondAskOrderOrderId), false);
-            Assert.AreEqual(spread.Ask.HasValue, false);
-            Assert.AreEqual(spread.Bid.HasValue, false);
+            Assert.AreEqual(6, matchResult.Fills.Count);
+            Assert.AreEqual(3, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(secondbuyOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(secondAskOrderOrderId));
+            Assert.AreEqual(false, spread.Ask.HasValue);
+            Assert.AreEqual(false, spread.Bid.HasValue);
         }
 
         [TestMethod]
@@ -168,15 +168,15 @@ namespace OrderbookCSTest
             var (matchResult, obResult) = LifoOrderbook.Match();
             var spread = LifoOrderbook.GetSpread();
 
-            Assert.AreEqual(matchResult.Fills.Count, 6);
-            Assert.AreEqual(matchResult.Trades.Count, 3);
-            Assert.AreEqual(obResult.HasCancelOrderStatus, true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(buyOrderOrderId), false);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(askOrderOrderId), true);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(secondbuyOrderOrderId), false);
-            Assert.AreEqual(LifoOrderbook.ContainsOrder(secondAskOrderOrderId), false);
-            Assert.AreEqual(spread.Ask.HasValue, true);
-            Assert.AreEqual(spread.Bid.HasValue, false);
+            Assert.AreEqual(6, matchResult.Fills.Count);
+            Assert.AreEqual(3, matchResult.Trades.Count);
+            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(buyOrderOrderId));
+            Assert.AreEqual(true, LifoOrderbook.ContainsOrder(askOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(secondbuyOrderOrderId));
+            Assert.AreEqual(false, LifoOrderbook.ContainsOrder(secondAskOrderOrderId));
+            Assert.AreEqual(true, spread.Ask.HasValue);
+            Assert.AreEqual(false, spread.Bid.HasValue);
         }
     }
 }
