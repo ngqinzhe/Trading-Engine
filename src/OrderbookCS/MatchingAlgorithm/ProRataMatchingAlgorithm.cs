@@ -14,6 +14,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 
         public MatchResult Match(IEnumerable<OrderbookEntry> bids, IEnumerable<OrderbookEntry> asks)
         {
+            var eventTime = DateTime.UtcNow;
             var matchResult = new MatchResult();
 
             if (!bids.Any() || !asks.Any())
@@ -32,6 +33,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 
             OrderbookEntry orderToMatchBid = bidIterator.CurrentItemOrDefault();
             OrderbookEntry orderToMatchAsk = askIterator.CurrentItemOrDefault();
+            
             do
             {
                 if (orderToMatchAsk.Current.Price > orderToMatchBid.Current.Price)
@@ -56,7 +58,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 orderToMatchAsk.Current.DecreaseQuantity(fillQuantity);
 
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
-                    fillQuantity, FillAllocationAlgorithm.ProRata);
+                    fillQuantity, FillAllocationAlgorithm.ProRata, eventTime);
                 matchResult.AddTradeResult(tradeResult);
 
                 if (tradeResult.BuyFill.IsCompleteFill)

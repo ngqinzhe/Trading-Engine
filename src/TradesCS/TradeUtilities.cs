@@ -8,15 +8,16 @@ namespace TradingEngineServer.Trades
 {
     public sealed class TradeUtilities
     {
-        public static TradeResult CreateTradeAndFills(Order bidOrder, Order askOrder, uint fillQuantity, FillAllocationAlgorithm fillAlocAlgo)
+        public static TradeResult CreateTradeAndFills(Order bidOrder, Order askOrder, 
+            uint fillQuantity, FillAllocationAlgorithm fillAlocAlgo, DateTime eventTime)
         {
-            var tradeTime = DateTime.UtcNow;
             var tradeNumber = TradeIdGenerator.GenerateTradeId();
             var fillsIds = GetFillIds(tradeNumber);
-            var executionId = GetTradeExecutionId(tradeTime, tradeNumber);
+            var executionId = GetTradeExecutionId(eventTime, tradeNumber);
 
             var buyFill = new Fill()
             {
+                EventTime = eventTime,
                 FillAllocationAlgorithm = fillAlocAlgo,
                 FillQuantity = fillQuantity,
                 IsCompleteFill = bidOrder.CurrentQuantity == 0,
@@ -27,6 +28,7 @@ namespace TradingEngineServer.Trades
 
             var askFill = new Fill()
             {
+                EventTime = eventTime,
                 FillAllocationAlgorithm = fillAlocAlgo,
                 FillQuantity = fillQuantity,
                 IsCompleteFill = askOrder.CurrentQuantity == 0,
@@ -37,6 +39,7 @@ namespace TradingEngineServer.Trades
 
             var trade = new Trade()
             {
+                EventTime = eventTime,
                 SecurityId = bidOrder.SecurityId,
                 Price = bidOrder.Price,
                 Quantity = fillQuantity,

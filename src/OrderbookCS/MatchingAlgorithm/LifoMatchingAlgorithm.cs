@@ -13,16 +13,21 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 
         public MatchResult Match(IEnumerable<OrderbookEntry> bids, IEnumerable<OrderbookEntry> asks)
         {
+            var eventTime = DateTime.UtcNow;
             var matchResult = new MatchResult();
+
+            if (!bids.Any() || !asks.Any())
+                return matchResult; // Can't match without both sides.
+
             // Cannot guarantee that bids are ordered in last-in-first-out order. Let's go ahead and do that.
             var reorderedBids = bids.GroupBy(x => x.ParentLimit.Price).Select(x => x.OrderByDescending(oe => oe.CreationTime))
                 .SelectMany(x => x);
             var reorderedAsks = asks.GroupBy(x => x.ParentLimit.Price).Select(x => x.OrderByDescending(oe => oe.CreationTime))
                 .SelectMany(x => x);
-            if (!reorderedBids.Any() || !reorderedAsks.Any())
-                return matchResult; // Can't match without both sides.
+
             OrderbookEntry orderToMatchBid = reorderedBids.First();
             OrderbookEntry orderToMatchAsk = reorderedAsks.First();
+
             do
             {
                 if (orderToMatchAsk.Current.Price > orderToMatchBid.Current.Price)
@@ -45,7 +50,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 orderToMatchAsk.Current.DecreaseQuantity(fillQuantity);
 
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
-                    fillQuantity, FillAllocationAlgorithm.Lifo);
+                    fillQuantity, FillAllocationAlgorithm.Lifo, eventTime);
                 matchResult.AddTradeResult(tradeResult);
 
                 // Lets move on. Or better said, let's move back!

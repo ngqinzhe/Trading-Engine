@@ -6,6 +6,7 @@ namespace TradingEngineServer.Trades
 {
     public class Trade
     {
+        public DateTime EventTime { get; set; }
         public int SecurityId { get; set; }
         public long Price { get; set; }
         public uint Quantity { get; set; }

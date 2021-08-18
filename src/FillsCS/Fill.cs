@@ -8,6 +8,10 @@ namespace TradingEngineServer.Fills
     public class Fill
     {
         /// <summary>
+        /// Initial processing time (in UTC) of the event that lead to the fill.
+        /// </summary>
+        public DateTime EventTime { get; set; }
+        /// <summary>
         /// Order that was fully or partially filled.
         /// </summary>
         public IOrderCore OrderBase { get; set; }
