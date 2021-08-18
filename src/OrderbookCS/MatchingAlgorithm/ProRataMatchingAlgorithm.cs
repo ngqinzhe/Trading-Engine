@@ -5,6 +5,8 @@ using System.Text;
 using TradingEngineServer.Fills;
 using TradingEngineServer.Trades;
 using TradingEngineServer.Orderbook.MatchingAlgorithm.OrderbookIterator;
+using TradingEngineServer.Orders;
+using TradingEngineServer.OrderbookData;
 
 namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 {
@@ -60,6 +62,8 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
                     fillQuantity, FillAllocationAlgorithm.ProRata, eventTime);
                 matchResult.AddTradeResult(tradeResult);
+                var orderbookUpdate = OrderbookUtilities.CreateIncrementalOrderbookUpdate(orderToMatchBid.ParentLimit, eventTime);
+                matchResult.AddIncrementalOrderbookUpdate(orderbookUpdate);
 
                 if (tradeResult.BuyFill.IsCompleteFill)
                 {

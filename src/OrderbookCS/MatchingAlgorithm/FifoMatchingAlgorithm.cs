@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TradingEngineServer.Fills;
+using TradingEngineServer.OrderbookData;
+using TradingEngineServer.Orders;
 using TradingEngineServer.Trades;
 
 namespace TradingEngineServer.Orderbook.MatchingAlgorithm
@@ -46,6 +48,8 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
                     fillQuantity, FillAllocationAlgorithm.Fifo, eventTime);
                 matchResult.AddTradeResult(tradeResult);
+                var orderbookUpdate = OrderbookUtilities.CreateIncrementalOrderbookUpdate(orderToMatchBid.ParentLimit, eventTime);
+                matchResult.AddIncrementalOrderbookUpdate(orderbookUpdate);
 
                 // Lets move on!
                 if (tradeResult.BuyFill.IsCompleteFill)
