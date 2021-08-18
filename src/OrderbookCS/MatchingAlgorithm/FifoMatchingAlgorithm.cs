@@ -13,11 +13,15 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 
         public MatchResult Match(IEnumerable<OrderbookEntry> bids, IEnumerable<OrderbookEntry> asks)
         {
+            var eventTime = DateTime.UtcNow;
             var matchResult = new MatchResult();
+
             if (!bids.Any() || !asks.Any())
                 return matchResult; // Can't match without both sides.
+
             OrderbookEntry orderToMatchBid = bids.First();
             OrderbookEntry orderToMatchAsk = asks.First();
+            
             do
             {
                 if (orderToMatchAsk.Current.Price > orderToMatchBid.Current.Price)
@@ -40,7 +44,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 orderToMatchAsk.Current.DecreaseQuantity(fillQuantity);
 
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
-                    fillQuantity, FillAllocationAlgorithm.Fifo);
+                    fillQuantity, FillAllocationAlgorithm.Fifo, eventTime);
                 matchResult.AddTradeResult(tradeResult);
 
                 // Lets move on!

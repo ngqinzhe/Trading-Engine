@@ -7,7 +7,7 @@ using TradingEngineServer.Rejects;
 namespace OrderbookCSTest
 {
     [TestClass]
-    public class OrderbookTests
+    public class CoreOrderbookTests
     {
         [TestMethod]
         public void Orderbook_AddSingleOrder_Success()
