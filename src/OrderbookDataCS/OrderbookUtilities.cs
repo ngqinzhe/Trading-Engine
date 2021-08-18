@@ -21,11 +21,15 @@ namespace TradingEngineServer.OrderbookData
             IncrementalOrderbookUpdateType updateType = limit.IsEmpty ? IncrementalOrderbookUpdateType.Delete :
                 containsSingleOrder ? IncrementalOrderbookUpdateType.New : 
                 IncrementalOrderbookUpdateType.Change;
+            OrderbookEntryType entryType = limit.Side == Side.Unknown ? OrderbookEntryType.Null : 
+                limit.Side == Side.Bid ? OrderbookEntryType.Bid : 
+                OrderbookEntryType.Ask;
 
             return new IncrementalOrderbookUpdate()
             {
                 EventTime = eventTime,
                 SecurityId = securityId,
+                EntryType = entryType,
                 UpdateType = updateType,
                 OrderCount = orderCount,
                 Price = price,

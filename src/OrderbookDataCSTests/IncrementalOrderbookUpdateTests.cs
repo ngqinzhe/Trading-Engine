@@ -18,6 +18,7 @@ namespace OrderbookDataCSTests
             var incrementalOrderbookUpdate = OrderbookUtilities.CreateIncrementalOrderbookUpdate(limit, DateTime.UtcNow);
 
             Assert.AreEqual(IncrementalOrderbookUpdateType.Delete, incrementalOrderbookUpdate.UpdateType);
+            Assert.AreEqual(OrderbookEntryType.Null, incrementalOrderbookUpdate.EntryType);
             Assert.AreEqual(SecurityConstants.InvalidSecurityId, incrementalOrderbookUpdate.SecurityId);
             Assert.AreEqual(0u, incrementalOrderbookUpdate.OrderCount);
             Assert.AreEqual(PriceConstants.InvalidPrice, incrementalOrderbookUpdate.Price);
@@ -29,27 +30,17 @@ namespace OrderbookDataCSTests
         {
             const long price = 10;
             const int securityId = 1;
-            Limit limit = CreateLimitWithOneEntry(price, securityId);
+            const bool isBuySide = true;
+            Limit limit = CreateLimitWithOneEntry(price, securityId, isBuySide);
 
             var incrementalOrderbookUpdate = OrderbookUtilities.CreateIncrementalOrderbookUpdate(limit, DateTime.UtcNow);
 
             Assert.AreEqual(IncrementalOrderbookUpdateType.New, incrementalOrderbookUpdate.UpdateType);
+            Assert.AreEqual(OrderbookEntryType.Bid, incrementalOrderbookUpdate.EntryType);
             Assert.AreEqual(securityId, incrementalOrderbookUpdate.SecurityId);
             Assert.AreEqual(1u, incrementalOrderbookUpdate.OrderCount);
             Assert.AreEqual(price, incrementalOrderbookUpdate.Price);
             Assert.AreEqual(10u, incrementalOrderbookUpdate.Quantity);
-        }
-
-        private static Limit CreateLimitWithOneEntry(long price, int securityId)
-        {
-            var limit = new Limit()
-            {
-                Price = price,
-            };
-            var orderbookEntry = new OrderbookEntry(new Order(new OrderCore(0, string.Empty, securityId), price, 10, true), limit);
-            limit.Head = orderbookEntry;
-            limit.Tail = orderbookEntry;
-            return limit;
         }
 
         [TestMethod]
@@ -57,25 +48,39 @@ namespace OrderbookDataCSTests
         {
             const long price = 10;
             const int securityId = 1;
-            Limit limit = CreateLimitWithTwoEntries(price, securityId);
+            const bool isBuySide = true;
+            Limit limit = CreateLimitWithTwoEntries(price, securityId, isBuySide);
 
             var incrementalOrderbookUpdate = OrderbookUtilities.CreateIncrementalOrderbookUpdate(limit, DateTime.UtcNow);
 
             Assert.AreEqual(IncrementalOrderbookUpdateType.Change, incrementalOrderbookUpdate.UpdateType);
+            Assert.AreEqual(OrderbookEntryType.Bid, incrementalOrderbookUpdate.EntryType);
             Assert.AreEqual(securityId, incrementalOrderbookUpdate.SecurityId);
             Assert.AreEqual(2u, incrementalOrderbookUpdate.OrderCount);
             Assert.AreEqual(price, incrementalOrderbookUpdate.Price);
             Assert.AreEqual(15u, incrementalOrderbookUpdate.Quantity);
         }
 
-        private static Limit CreateLimitWithTwoEntries(long price, int securityId)
+        private static Limit CreateLimitWithOneEntry(long price, int securityId, bool isBuySide)
         {
             var limit = new Limit()
             {
                 Price = price,
             };
-            var orderbookEntry = new OrderbookEntry(new Order(new OrderCore(0, string.Empty, securityId), price, 10, true), limit);
-            var orderbookEntryTail = new OrderbookEntry(new Order(new OrderCore(0, string.Empty, securityId), price, 5, true), limit);
+            var orderbookEntry = new OrderbookEntry(new Order(new OrderCore(0, string.Empty, securityId), price, 10, isBuySide), limit);
+            limit.Head = orderbookEntry;
+            limit.Tail = orderbookEntry;
+            return limit;
+        }
+
+        private static Limit CreateLimitWithTwoEntries(long price, int securityId, bool isBuySide)
+        {
+            var limit = new Limit()
+            {
+                Price = price,
+            };
+            var orderbookEntry = new OrderbookEntry(new Order(new OrderCore(0, string.Empty, securityId), price, 10, isBuySide), limit);
+            var orderbookEntryTail = new OrderbookEntry(new Order(new OrderCore(0, string.Empty, securityId), price, 5, isBuySide), limit);
             orderbookEntry.Next = orderbookEntryTail;
             limit.Head = orderbookEntry;
             orderbookEntryTail.Previous = limit.Head;

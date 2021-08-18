@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TradingEngineServer.OrderbookData
+namespace TradingEngineServer.Orders
 {
-    public enum OrderbookEntryType
+    public enum Side
     {
-        Null,
+        Unknown,
         Bid,
         Ask,
     }

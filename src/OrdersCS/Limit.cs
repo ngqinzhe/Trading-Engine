@@ -39,5 +39,17 @@ namespace TradingEngineServer.Orders
                 return Head == null && Tail == null;
             }
         }
+        public Side Side
+        {
+            get
+            {
+                if (IsEmpty)
+                    return Side.Unknown;
+                else
+                {
+                    return Head.Current.IsBuySide ? Side.Bid : Side.Ask;
+                }
+            }
+        }
     }
 }
