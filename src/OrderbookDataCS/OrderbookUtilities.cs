@@ -44,7 +44,8 @@ namespace TradingEngineServer.OrderbookData
             var orderRecords = limit.GetLevelOrderRecords();
             List<IncrementalOrderbookUpdateEntry> orderbookUpdateEntries = new List<IncrementalOrderbookUpdateEntry>(orderRecords.Count);
             foreach (var orderRecord in orderRecords)
-                orderbookUpdateEntries.Add(new IncrementalOrderbookUpdateEntry(AnonymizeOrderId(orderRecord.OrderId), orderRecord.Quantity));
+                orderbookUpdateEntries.Add(new IncrementalOrderbookUpdateEntry(AnonymizeOrderId(orderRecord.OrderId), 
+                    orderRecord.Quantity, orderRecord.TheoreticalQueuePosition));
             return orderbookUpdateEntries;
         }
 

@@ -36,12 +36,13 @@ namespace TradingEngineServer.Orders
         {
             List<OrderRecord> orderMetaData = new List<OrderRecord>();
             OrderbookEntry headPointer = Head;
+            uint queuePosition = 0;
             while (headPointer != null)
             {
                 var currentOrder = headPointer.Current;
                 if (currentOrder.CurrentQuantity != 0)
                     orderMetaData.Add(new OrderRecord(currentOrder.OrderId, currentOrder.CurrentQuantity,
-                        currentOrder.IsBuySide, currentOrder.Username, currentOrder.SecurityId));
+                        currentOrder.IsBuySide, currentOrder.Username, currentOrder.SecurityId, queuePosition++));
                 headPointer = headPointer.Next;
             }
             return orderMetaData;
