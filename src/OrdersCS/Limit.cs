@@ -32,18 +32,16 @@ namespace TradingEngineServer.Orders
             }
             return orderQuantity;
         }
-        public List<OrderbookEntryData> GetLevelOrderMetaData()
+        public List<OrderRecord> GetLevelOrderMetaData()
         {
-            List<OrderbookEntryData> orderMetaData = new List<OrderbookEntryData>();
+            List<OrderRecord> orderMetaData = new List<OrderRecord>();
             OrderbookEntry headPointer = Head;
             while (headPointer != null)
             {
-                if (headPointer.Current.CurrentQuantity != 0)
-                    orderMetaData.Add(new OrderbookEntryData()
-                    {
-                        OrderId = headPointer.Current.OrderId,
-                        Quantity = headPointer.Current.CurrentQuantity,
-                    });
+                var currentOrder = headPointer.Current;
+                if (currentOrder.CurrentQuantity != 0)
+                    orderMetaData.Add(new OrderRecord(currentOrder.OrderId, currentOrder.CurrentQuantity,
+                        currentOrder.IsBuySide, currentOrder.Username, currentOrder.SecurityId));
                 headPointer = headPointer.Next;
             }
             return orderMetaData;
