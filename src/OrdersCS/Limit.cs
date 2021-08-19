@@ -32,7 +32,7 @@ namespace TradingEngineServer.Orders
             }
             return orderQuantity;
         }
-        public List<OrderRecord> GetLevelOrderMetaData()
+        public List<OrderRecord> GetLevelOrderRecords()
         {
             List<OrderRecord> orderMetaData = new List<OrderRecord>();
             OrderbookEntry headPointer = Head;
