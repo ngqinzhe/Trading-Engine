@@ -40,10 +40,10 @@ namespace TradingEngineServer.OrderbookData
 
         private static List<IncrementalOrderbookUpdateEntry> GenerateIncrementalOrderbookUpdateEntries(Limit limit)
         {
-            var orderMetaDatas = limit.GetLevelOrderRecords();
-            List<IncrementalOrderbookUpdateEntry> orderbookUpdateEntries = new List<IncrementalOrderbookUpdateEntry>(orderMetaDatas.Count);
-            foreach (var orderMeta in orderMetaDatas)
-                orderbookUpdateEntries.Add(new IncrementalOrderbookUpdateEntry(AnonymizeOrderId(orderMeta.OrderId), orderMeta.Quantity));
+            var orderRecords = limit.GetLevelOrderRecords();
+            List<IncrementalOrderbookUpdateEntry> orderbookUpdateEntries = new List<IncrementalOrderbookUpdateEntry>(orderRecords.Count);
+            foreach (var orderRecord in orderRecords)
+                orderbookUpdateEntries.Add(new IncrementalOrderbookUpdateEntry(AnonymizeOrderId(orderRecord.OrderId), orderRecord.Quantity));
             return orderbookUpdateEntries;
         }
 
