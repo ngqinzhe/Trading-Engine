@@ -1,6 +1,6 @@
 # Eden
 
-![Eden](/resources/Eden.png)
+![Eden](/resources/Eden.jpg)
 
 Eden is an algorithmic trading platform, whose core is a trading engine and limit orderbook, implemented in C# and built on .netstandard2.1. 
 All the code under `src/` is being built upon in real-time on my [Algo Trading Platform Series](https://youtube.com/playlist?list=PLIkrF4j3_p-3fA9LyzSpT6yFPnqvJ02LS).
