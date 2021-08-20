@@ -65,3 +65,27 @@ The following steps will allow you to build and run Eden.
 2. Download this repository.
 3. Open `TradingEngine.sln` under `src/TradingEngine`
 4. Hit F5 to build and run the solution.
+
+***
+
+# EDEN Architecture
+
+The following is a diagram representing the architecture of EDEN and EXODUS. EXODUS is the market data dissemination platform that will be built alongside EDEN. 
+
+![Architecture](/resources/architecture.png)
+
+**Note:** Currently, EDEN is being worked on. Work on EXODUS has not started. The Instrument Flat File detailed above does not yet exist.
+
+## Description
+
+*EDEN and all trading clients reference a flat file detailing which instruments are supported for trading.*
+
+1. Trading client connects to EDEN via TCP, leveraging gRPC. The trading client now has a private communication channel open between itself and EDEN.
+2. Trading client can submit New Order, Cancel Order, and Modify Order requests, receving a corresponding acknowledgement for each via the gRPC bi-directional stream.
+3. Upon receipt of a New Order, Cancel Order, or Modify Order, EDEN persists the order's information to Cassandra.
+4. If a trading client's order matches against a resting order, they receive a Fill via the gRPC bi-directional stream.
+5. Given a match, a Trade Summary, Incremental Orderbook Update and Trade Statistic message is generated and sent to EXODUS.
+6. EXODUS persists this information in a seperate instance of Cassandra dedicated to storing market data. Whether it persists it to a seperate instance of Cassandra or the same instance that EDEN uses is still up for discussion.
+7. Said market data is sent to all listening clients. Listening applications include:
+    i) Applications with order entry capabilities listening to market data.
+    ii) Applications **without** order entry capabilities listening to market data. In other words, one does not need to connect to EDEN to connect to EXODUS.
