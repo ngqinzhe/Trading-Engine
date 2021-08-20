@@ -33,6 +33,7 @@ The following features are currently supported.
 ### Market Data
 
 1. Trade Summary
+2. Market-By-Order Incremental Orderbook Update
 
 ***
 
@@ -50,10 +51,8 @@ Seperate market data dissemination platform.
 
 ### Market Data
 
-1. Market-By-Order Incremental Orderbook Update
-2. Session Statistics
-3. Daily Statistics
-4. Security Definition
+1. Session Statistics
+2. Daily Statistics
 
 ***
 
