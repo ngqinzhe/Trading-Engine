@@ -86,7 +86,6 @@ namespace TradingEngineServer.Orderbook
                 securityStatistics.TrySetHigh(t.Price);
                 securityStatistics.TrySetLow(t.Price);
                 securityStatistics.SetLast(t.Price);
-                securityStatistics.IncrementTradeCount();
             });
         }
 

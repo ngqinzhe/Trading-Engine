@@ -12,7 +12,6 @@ namespace TradingEngineServer.Instrument
             Security = security;
             Volume = 0;
             Last = 0;
-            TradeCount = 0;
             Low = long.MaxValue;
             High = long.MinValue;
         }
@@ -47,17 +46,11 @@ namespace TradingEngineServer.Instrument
             Volume += quantity; 
         }
 
-        public void IncrementTradeCount()
-        {
-            TradeCount++;
-        }
-
         // PROPERTIES //
         public uint Volume { get; private set; }
         public long Last { get; private set; }
         public long Low { get; private set; }
         public long High { get; private set; }
-        public int TradeCount { get; private set; }
         public Security Security { get; private set; }
     }
 }
