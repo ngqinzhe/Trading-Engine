@@ -78,7 +78,7 @@ The following is a diagram representing the architecture of EDEN and EXODUS. EXO
 
 ## Description
 
-*EDEN and all trading clients reference a flat file detailing which instruments are supported for trading.*
+*EDEN and all trading clients reference a flat file detailing which instruments are supported for trading. Orders submitted from trading clients for instruments not contained in the flat file will be rejected by EDEN.*
 
 1. Trading client connects to EDEN via TCP, leveraging gRPC. The trading client now has a private communication channel open between itself and EDEN.
 2. Trading client can submit New Order, Cancel Order, and Modify Order requests, receving a corresponding acknowledgement for each via the gRPC bi-directional stream.
