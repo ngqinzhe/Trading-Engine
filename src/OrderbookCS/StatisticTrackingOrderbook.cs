@@ -83,9 +83,7 @@ namespace TradingEngineServer.Orderbook
             trades.ForEach(t =>
             {
                 securityStatistics.AddVolume(t.Quantity);
-                securityStatistics.TrySetHigh(t.Price);
-                securityStatistics.TrySetLow(t.Price);
-                securityStatistics.SetLast(t.Price);
+                securityStatistics.AcceptPrice(t.Price);
             });
         }
 

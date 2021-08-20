@@ -16,29 +16,17 @@ namespace TradingEngineServer.Instrument
             High = long.MinValue;
         }
 
-        public void SetLast(long last)
+        public void AcceptPrice(long lastPrice)
         {
-            Last = last;
-        }
-
-        public bool TrySetHigh(long potentialHigh)
-        {
-            if (potentialHigh > High)
+            Last = lastPrice;
+            if (lastPrice > High)
             {
-                High = potentialHigh;
-                return true;
+                High = lastPrice;
             }
-            return false;
-        }
-
-        public bool TrySetLow(long potentialLow)
-        {
-            if (potentialLow < Low)
+            else if (lastPrice < Low)
             {
-                Low = potentialLow;
-                return true;
+                Low = lastPrice;
             }
-            return false;
         }
 
         public void AddVolume(uint quantity)
