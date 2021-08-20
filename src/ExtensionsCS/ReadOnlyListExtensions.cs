@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TradingEngineServer.Extensions
+namespace TradingEngineServer.Extensions.List
 {
     public static class ReadOnlyListExtensions
     {
