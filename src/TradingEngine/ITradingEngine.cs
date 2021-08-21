@@ -8,6 +8,5 @@ namespace TradingEngineServer.Core
 {
     interface ITradingEngine
     {
-        Task RunAsync(CancellationToken token);
     }
 }

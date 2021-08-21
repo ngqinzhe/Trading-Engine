@@ -31,8 +31,6 @@ namespace TradingEngineServer.Core
 
         }
 
-        public Task RunAsync(CancellationToken token) => ExecuteAsync(token);
-
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _textLogger.Information(nameof(TradingEngineServer), $"Starting Trading Engine");
