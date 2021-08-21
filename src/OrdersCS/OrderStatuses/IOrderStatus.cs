@@ -4,8 +4,11 @@ using System.Text;
 
 namespace TradingEngineServer.Orders.OrderStatuses
 {
-    public interface IOrderStatus : IOrderCore
+    public interface IOrderStatus
     {
         DateTime CreationTime { get; }
+        public long OrderId { get; }
+        public string Username { get; }
+        public int SecurityId { get; }
     }
 }
