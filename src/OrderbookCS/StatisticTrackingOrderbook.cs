@@ -19,7 +19,7 @@ namespace TradingEngineServer.Orderbook
     /// </summary>
     public class StatisticTrackingOrderbook : IMatchingOrderbook, IStatisticsTrackingOrderbook
     {
-        public StatisticTrackingOrderbook(Security security, Fills.FillAllocationAlgorithm faa)
+        public StatisticTrackingOrderbook(Security security, AllocationAlgorithm faa)
         {
             _underlyingOrderbook = OrderbookFactory.CreateOrderbook(security, faa);
             _securityStatistics = new SecurityStatistics(security);
