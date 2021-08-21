@@ -31,7 +31,6 @@ namespace TradingEngineServer.Orderbook
             OrderbookResult ar = new OrderbookResult();
             var baseLimit = new Limit() { Price = order.Price, };
             AddOrder(order, baseLimit, order.IsBuySide ? _bidLimits : _askLimits, _orders);
-            ar.AddNewOrderStatus(OrderStatusCreator.GenerateNewOrderStatus(order));
             return ar;
         }
 
@@ -56,7 +55,6 @@ namespace TradingEngineServer.Orderbook
                 ar.AddRejection(RejectionCreator.GenerateOrderCoreReject(modifyOrder, RejectionReason.OrderNotFound));
                 return ar;
             }
-            ar.AddModifyOrderStatus(OrderStatusCreator.GenerateModifyOrderStatus(modifyOrder));
             return ar;
         }
 
@@ -66,7 +64,6 @@ namespace TradingEngineServer.Orderbook
             if (_orders.TryGetValue(cancelOrder.OrderId, out OrderbookEntry obe))
             {
                 RemoveOrder(cancelOrder, obe, _orders);
-                ar.AddCancelOrderStatus(OrderStatusCreator.GenerateOrderCancelStatus(cancelOrder));
             }
             else
             {
