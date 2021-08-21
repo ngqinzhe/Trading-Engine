@@ -19,10 +19,10 @@ namespace TradingEngineServer.Core
     {
         private readonly TradingEngineServerConfiguration _engineConfiguration;
         private readonly ITextLogger _textLogger;
-        private readonly IExchange _exchange;
+        private readonly ITradingExchange _exchange;
 
         public TradingEngineServer(IOptions<TradingEngineServerConfiguration> engineConfiguration,
-            IExchange exchange,
+            ITradingExchange exchange,
             ITextLogger textLogger)
         {
             _engineConfiguration = engineConfiguration?.Value ?? throw new ArgumentNullException(nameof(engineConfiguration));

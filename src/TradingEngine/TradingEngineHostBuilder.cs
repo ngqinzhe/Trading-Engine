@@ -19,11 +19,12 @@ namespace TradingEngineServer.Core
                     services.AddOptions();
                     services.Configure<TradingEngineServerConfiguration>(hostContext.Configuration.GetSection(nameof(TradingEngineServerConfiguration)));
                     services.Configure<LoggerConfiguration>(hostContext.Configuration.GetSection(nameof(LoggerConfiguration)));
+                    services.Configure<TradingExchangeConfiguration>(hostContext.Configuration.GetSection(nameof(TradingExchangeConfiguration)));
 
                     // Add singleton objects.
                     services.AddSingleton<ITextLogger, TextLogger>();
                     services.AddSingleton<ITradingEngine, TradingEngineServer>();
-                    services.AddSingleton<IExchange, Exchange>();
+                    services.AddSingleton<ITradingExchange, TradingExchange>();
 
                     // Add hosted service.
                     services.AddHostedService<TradingEngineServer>();
