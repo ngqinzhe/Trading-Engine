@@ -12,7 +12,7 @@ namespace TradingEngineServer.Exchange
         bool TryGetOrderbook(Security security, out IMatchingOrderbook orderbook);
     }
 
-    public interface IExchange : IOrderbookRetriever
+    public interface ITradingExchange : IOrderbookRetriever
     {
 
     }

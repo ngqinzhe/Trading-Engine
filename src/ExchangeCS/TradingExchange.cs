@@ -9,9 +9,9 @@ using TradingEngineServer.Orders;
 
 namespace TradingEngineServer.Exchange
 {
-    public class Exchange : IExchange
+    public class TradingExchange : ITradingExchange
     {
-        public Exchange(IOptions<ExchangeConfiguration> exchangeConfiguration)
+        public TradingExchange(IOptions<TradingExchangeConfiguration> exchangeConfiguration)
         {
             var ec = exchangeConfiguration.Value ?? throw new ArgumentNullException(nameof(exchangeConfiguration));
             _exchangeId = ec.ExchangeId;

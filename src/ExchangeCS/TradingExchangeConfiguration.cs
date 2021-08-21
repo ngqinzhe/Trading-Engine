@@ -6,7 +6,7 @@ using TradingEngineServer.Orderbook;
 
 namespace TradingEngineServer.Exchange
 {
-    public class ExchangeConfiguration
+    public class TradingExchangeConfiguration
     {
         public int ExchangeId { get; set; }
         public List<Security> Securities { get; set; }
