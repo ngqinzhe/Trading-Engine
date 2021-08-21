@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TradingEngineServer.Instrument;
 using TradingEngineServer.Orders;
 
 namespace TradingEngineServer.Fills
@@ -44,6 +45,6 @@ namespace TradingEngineServer.Fills
         /// <summary>
         /// Allocation algorithm used to fill the order with <see cref="OrderId"/>.
         /// </summary>
-        public FillAllocationAlgorithm FillAllocationAlgorithm { get; set; }
+        public AllocationAlgorithm AllocationAlgorithm { get; set; }
     }
 }

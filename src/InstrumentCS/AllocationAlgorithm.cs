@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TradingEngineServer.Fills
+namespace TradingEngineServer.Instrument
 {
-    public enum FillAllocationAlgorithm
+    public enum AllocationAlgorithm
     {
         Unknown,
         Fifo,

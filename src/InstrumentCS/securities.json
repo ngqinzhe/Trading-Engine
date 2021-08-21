@@ -1,0 +1,15 @@
+{
+    "ExchangeId": 0,
+    "Securities": [
+        {
+            "SecurityId": 0,
+            "Symbol": "AAPL",
+            "FillAllocationAlgorithm": "ProRata"
+        },
+        {
+            "SecurityId": 1,
+            "Symbol": "FB",
+            "FillAllocationAlgorithm": "Fifo"
+        }
+    ]
+}
