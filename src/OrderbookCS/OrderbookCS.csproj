@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CommonCS\CommonCS.csproj" />
     <ProjectReference Include="..\ExtensionsCS\ExtensionsCS.csproj" />
     <ProjectReference Include="..\FillsCS\FillsCS.csproj" />
     <ProjectReference Include="..\InstrumentCS\InstrumentCS.csproj" />
