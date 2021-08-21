@@ -9,24 +9,15 @@ namespace TradingEngineServer.Orders
     {
         public static CancelOrderStatus GenerateOrderCancelStatus(CancelOrder obe)
         {
-            return new CancelOrderStatus
-            {
-
-            };
+            return new CancelOrderStatus(obe);
         }
         public static NewOrderStatus GenerateNewOrderStatus(Order obe)
         {
-            return new NewOrderStatus
-            {
-
-            };
+            return new NewOrderStatus(obe);
         }
         public static ModifyOrderStatus GenerateModifyOrderStatus(ModifyOrder obe)
         {
-            return new ModifyOrderStatus
-            {
-
-            };
+            return new ModifyOrderStatus(obe);
         }
     }
 }
