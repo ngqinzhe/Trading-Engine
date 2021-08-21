@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace TradingEngine.Core
+namespace TradingEngineServer.Core
 {
     interface ITradingEngine
     {

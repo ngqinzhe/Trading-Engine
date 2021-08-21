@@ -3,10 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using TradingEngine.Core.Configuration;
-using TradingEngine.Logging;
+using TradingEngineServer.Core.Configuration;
+using TradingEngineServer.Logging;
+using TradingEngineServer.Exchange;
 
-namespace TradingEngine.Core
+namespace TradingEngineServer.Core
 {
     public sealed class TradingEngineHostBuilder
     {
@@ -22,6 +23,7 @@ namespace TradingEngine.Core
                     // Add singleton objects.
                     services.AddSingleton<ITextLogger, TextLogger>();
                     services.AddSingleton<ITradingEngine, TradingEngineServer>();
+                    services.AddSingleton<IExchange, Exchange>();
 
                     // Add hosted service.
                     services.AddHostedService<TradingEngineServer>();

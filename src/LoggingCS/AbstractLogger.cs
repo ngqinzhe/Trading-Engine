@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TradingEngine.Logging
+namespace TradingEngineServer.Logging
 {
     public abstract class AbstractLogger : ILogger
     {

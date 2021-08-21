@@ -9,21 +9,26 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using TradingEngine.Core.Configuration;
-using TradingEngine.Logging;
+using TradingEngineServer.Core.Configuration;
+using TradingEngineServer.Logging;
+using TradingEngineServer.Exchange;
 
-namespace TradingEngine.Core
+namespace TradingEngineServer.Core
 {
     class TradingEngineServer : BackgroundService, ITradingEngine
     {
-        private readonly IOptions<TradingEngineServerConfiguration> _engineConfiguration;
+        private readonly TradingEngineServerConfiguration _engineConfiguration;
         private readonly ITextLogger _textLogger;
+        private readonly IExchange _exchange;
 
         public TradingEngineServer(IOptions<TradingEngineServerConfiguration> engineConfiguration,
+            IExchange exchange,
             ITextLogger textLogger)
         {
-            _engineConfiguration = engineConfiguration ?? throw new ArgumentNullException(nameof(engineConfiguration));
+            _engineConfiguration = engineConfiguration?.Value ?? throw new ArgumentNullException(nameof(engineConfiguration));
+            _exchange = exchange ?? throw new ArgumentNullException(nameof(exchange));
             _textLogger = textLogger ?? throw new ArgumentNullException(nameof(textLogger));
+
         }
 
         public Task RunAsync(CancellationToken token) => ExecuteAsync(token);

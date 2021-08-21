@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TradingEngine.Core
+namespace TradingEngineServer.Core
 {
     public static class TradingEngineServiceProvider
     {
