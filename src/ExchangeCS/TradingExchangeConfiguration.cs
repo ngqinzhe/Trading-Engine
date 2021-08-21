@@ -9,6 +9,7 @@ namespace TradingEngineServer.Exchange
     public class TradingExchangeConfiguration
     {
         public int ExchangeId { get; set; }
+        public string ExchangeName { get; set; }
         public List<Security> Securities { get; set; }
     }
 }

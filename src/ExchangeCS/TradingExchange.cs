@@ -15,6 +15,7 @@ namespace TradingEngineServer.Exchange
         {
             var ec = exchangeConfiguration.Value ?? throw new ArgumentNullException(nameof(exchangeConfiguration));
             _exchangeId = ec.ExchangeId;
+            _exchangeName = ec.ExchangeName;
             foreach (var security in ec.Securities)
                 _orderbooks.Add(security, OrderbookFactory.CreateOrderbook(security, security.AllocationAlgorithm));
         }
@@ -25,18 +26,18 @@ namespace TradingEngineServer.Exchange
             return _exchangeId;
         }
 
-        public bool TryGetOrderbook(Security security, out IMatchingOrderbook orderbook)
+        public string GetExchangeName()
         {
-            return TryGetOrderbook(security, out orderbook, _orderbooks);
+            return _exchangeName;
         }
 
-        private static bool TryGetOrderbook(Security security, out IMatchingOrderbook orderbook,
-            Dictionary<Security, IMatchingOrderbook> orderbookStore)
+        public bool TryGetOrderbook(Security security, out IMatchingOrderbook orderbook)
         {
-            return orderbookStore.TryGetValue(security, out orderbook);
+            return _orderbooks.TryGetValue(security, out orderbook);
         }
 
         private readonly int _exchangeId;
+        private readonly string _exchangeName;
         private readonly Dictionary<Security, IMatchingOrderbook> _orderbooks = 
             new Dictionary<Security, IMatchingOrderbook>(SecurityComparer.Comparer);
     }

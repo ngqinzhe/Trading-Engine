@@ -14,6 +14,7 @@ namespace TradingEngineServer.Exchange
 
     public interface ITradingExchange : IOrderbookRetriever
     {
-
+        int GetExchangeId();
+        string GetExchangeName();
     }
 }
