@@ -27,10 +27,17 @@ namespace TradingEngineServer.Exchange
 
         public bool TryGetOrderbook(Security security, out IMatchingOrderbook orderbook)
         {
-            return _orderbooks.TryGetValue(security, out orderbook);
+            return TryGetOrderbook(security, out orderbook, _orderbooks);
+        }
+
+        private static bool TryGetOrderbook(Security security, out IMatchingOrderbook orderbook,
+            Dictionary<Security, IMatchingOrderbook> orderbookStore)
+        {
+            return orderbookStore.TryGetValue(security, out orderbook);
         }
 
         private readonly int _exchangeId;
-        private readonly Dictionary<Security, IMatchingOrderbook> _orderbooks = new Dictionary<Security, IMatchingOrderbook>(SecurityComparer.Comparer);
+        private readonly Dictionary<Security, IMatchingOrderbook> _orderbooks = 
+            new Dictionary<Security, IMatchingOrderbook>(SecurityComparer.Comparer);
     }
 }
