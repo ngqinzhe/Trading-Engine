@@ -94,8 +94,6 @@ namespace OrderbookCSTest
 
             // 3
             Assert.AreEqual(expected, actual);
-            Assert.AreEqual(modifyOrderQuantity, buyOrders[0].Current.InitialQuantity);
-            Assert.IsTrue(res.HasModifyOrderStatus);
         }
 
         [TestMethod]

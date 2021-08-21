@@ -16,7 +16,7 @@ namespace OrderbookCSTest
         {
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, FillAllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 10, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 10, true);
 
@@ -27,7 +27,6 @@ namespace OrderbookCSTest
 
             Assert.AreEqual(2, matchResult.Fills.Count);
             Assert.AreEqual(1, matchResult.Trades.Count);
-            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(buyOrderOrderId));
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(askOrderOrderId));
         }
@@ -37,7 +36,7 @@ namespace OrderbookCSTest
         {
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, FillAllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 10, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
 
@@ -48,7 +47,6 @@ namespace OrderbookCSTest
 
             Assert.AreEqual(2, matchResult.Fills.Count);
             Assert.AreEqual(1, matchResult.Trades.Count);
-            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
             Assert.AreEqual(true, fifoOrderbook.ContainsOrder(buyOrderOrderId));
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(askOrderOrderId));
         }
@@ -59,7 +57,7 @@ namespace OrderbookCSTest
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
             const long secondbuyOrderOrderId = 2;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, FillAllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 20, false); // Sell side hits 2 bids
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
             var buyOrder2 = new Order(new OrderCore(secondbuyOrderOrderId, string.Empty, 0), 10_001, 15, true);
@@ -73,7 +71,6 @@ namespace OrderbookCSTest
 
             Assert.AreEqual(4, matchResult.Fills.Count);
             Assert.AreEqual(2, matchResult.Trades.Count);
-            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(buyOrderOrderId));
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(askOrderOrderId));
             Assert.AreEqual(true, fifoOrderbook.ContainsOrder(secondbuyOrderOrderId));
@@ -86,7 +83,7 @@ namespace OrderbookCSTest
             const long buyOrderOrderId = 1;
             const long secondbuyOrderOrderId = 2;
             const long askPrice = 10_000;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, FillAllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 100, false); // Masive ask wall.
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
             var buyOrder2 = new Order(new OrderCore(secondbuyOrderOrderId, string.Empty, 0), 10_001, 15, true);
@@ -100,7 +97,6 @@ namespace OrderbookCSTest
 
             Assert.AreEqual(4, matchResult.Fills.Count);
             Assert.AreEqual(2, matchResult.Trades.Count);
-            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(buyOrderOrderId));
             Assert.AreEqual(true, fifoOrderbook.ContainsOrder(askOrderOrderId));
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(secondbuyOrderOrderId));
@@ -117,7 +113,7 @@ namespace OrderbookCSTest
             const long secondbuyOrderOrderId = 3;
             const long askPrice = 10_000;
             const long bidPrice = 10_001;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, FillAllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 10, false);
             var askOrder2 = new Order(new OrderCore(secondAskOrderOrderId, string.Empty, 0), askPrice, 20, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), bidPrice, 15, true);
@@ -133,7 +129,6 @@ namespace OrderbookCSTest
 
             Assert.AreEqual(6, matchResult.Fills.Count);
             Assert.AreEqual(3, matchResult.Trades.Count);
-            Assert.AreEqual(true, obResult.HasCancelOrderStatus);
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(buyOrderOrderId));
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(askOrderOrderId));
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(secondbuyOrderOrderId));
