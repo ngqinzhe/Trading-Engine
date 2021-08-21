@@ -5,14 +5,17 @@ using TradingEngineServer.Orders;
 
 namespace TradingEngineServer.Orderbook
 {
-    public interface IOrderEntryOrderbook
+    public interface IReadOnlyOrderbook
+    {
+        bool ContainsOrder(long orderId);
+        bool TryGetOrder(long orderId, out Order order);
+    }
+    public interface IOrderEntryOrderbook : IReadOnlyOrderbook
     {
         void AddOrder(Order order);
         void ChangeOrder(ModifyOrder modifyOrder);
         void RemoveOrder(CancelOrder cancelOrder);
         OrderbookSpread GetSpread();
-        bool ContainsOrder(long orderId);
-        bool TryGetOrder(long orderId, out Order order);
         int Count { get; }
     }
 

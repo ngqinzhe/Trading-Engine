@@ -8,7 +8,7 @@ namespace TradingEngineServer.Orderbook
 {
     public class RejectGenerator : IRejectGenerator
     {
-        public bool TryRejectCancelOrder(CancelOrder cancelOrder, IOrderEntryOrderbook orderbook, out Rejection rejection)
+        public bool TryRejectCancelOrder(CancelOrder cancelOrder, IReadOnlyOrderbook orderbook, out Rejection rejection)
         {
             if (!orderbook.ContainsOrder(cancelOrder.OrderId))
             {
@@ -19,7 +19,7 @@ namespace TradingEngineServer.Orderbook
             return false;
         }
 
-        public bool TryRejectModifyOrder(ModifyOrder modifyOrder, IOrderEntryOrderbook orderbook, out Rejection rejection)
+        public bool TryRejectModifyOrder(ModifyOrder modifyOrder, IReadOnlyOrderbook orderbook, out Rejection rejection)
         {
             if (!orderbook.ContainsOrder(modifyOrder.OrderId))
             {
@@ -38,7 +38,7 @@ namespace TradingEngineServer.Orderbook
             return false;
         }
 
-        public bool TryRejectNewOrder(Order order, IOrderEntryOrderbook orderbook, out Rejection rejection)
+        public bool TryRejectNewOrder(Order order, IReadOnlyOrderbook orderbook, out Rejection rejection)
         {
             if (orderbook.ContainsOrder(order.OrderId))
             {

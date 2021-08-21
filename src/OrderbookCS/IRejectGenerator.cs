@@ -8,8 +8,8 @@ namespace TradingEngineServer.Orderbook
 {
     public interface IRejectGenerator
     {
-        bool TryRejectNewOrder(Order order, IOrderEntryOrderbook orderbook, out Rejection rejection);
-        bool TryRejectModifyOrder(ModifyOrder modifyOrder, IOrderEntryOrderbook orderbook, out Rejection rejection);
-        bool TryRejectCancelOrder(CancelOrder cancelOrder, IOrderEntryOrderbook orderbook, out Rejection rejection);
+        bool TryRejectNewOrder(Order order, IReadOnlyOrderbook orderbook, out Rejection rejection);
+        bool TryRejectModifyOrder(ModifyOrder modifyOrder, IReadOnlyOrderbook orderbook, out Rejection rejection);
+        bool TryRejectCancelOrder(CancelOrder cancelOrder, IReadOnlyOrderbook orderbook, out Rejection rejection);
     }
 }
