@@ -59,8 +59,8 @@ namespace TradingEngineServer.Orderbook
         {
             if (_orders.TryGetValue(orderId, out var entry))
             {
-                // Order is immutable, it's fine if we return it.
-                order = entry.Current;
+                // Create a copy as to not allow the client to alter the state of the order.
+                order = entry.Current.Clone();
                 return true;
             }
             order = null;
