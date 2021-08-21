@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExtensionsCS\ExtensionsCS.csproj" />
     <ProjectReference Include="..\FillsCS\FillsCS.csproj" />
     <ProjectReference Include="..\InstrumentCS\InstrumentCS.csproj" />
+    <ProjectReference Include="..\OrderbookDataCS\OrderbookDataCS.csproj" />
     <ProjectReference Include="..\OrdersCS\OrdersCS.csproj" />
     <ProjectReference Include="..\TradesCS\TradesCS.csproj" />
   </ItemGroup>

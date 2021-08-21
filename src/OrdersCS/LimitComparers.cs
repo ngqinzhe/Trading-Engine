@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace TradingEngineServer.Orderbook
+namespace TradingEngineServer.Orders
 {
-    internal class BidLimitComparer : IComparer<Limit>
+    public class BidLimitComparer : IComparer<Limit>
     {
         public static IComparer<Limit> Comparer { get; } = new BidLimitComparer();
 
@@ -19,7 +19,7 @@ namespace TradingEngineServer.Orderbook
         }
     }
 
-    internal class AskLimitComparer : IComparer<Limit>
+    public class AskLimitComparer : IComparer<Limit>
     {
         public static IComparer<Limit> Comparer { get; } = new AskLimitComparer();
 
