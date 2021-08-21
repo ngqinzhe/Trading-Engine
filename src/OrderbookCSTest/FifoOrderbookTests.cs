@@ -23,7 +23,7 @@ namespace OrderbookCSTest
             fifoOrderbook.AddOrder(askOrder);
             fifoOrderbook.AddOrder(buyOrder);
 
-            var (matchResult, obResult) = fifoOrderbook.Match();
+            var matchResult = fifoOrderbook.Match();
 
             Assert.AreEqual(2, matchResult.Fills.Count);
             Assert.AreEqual(1, matchResult.Trades.Count);
@@ -43,7 +43,7 @@ namespace OrderbookCSTest
             fifoOrderbook.AddOrder(askOrder);
             fifoOrderbook.AddOrder(buyOrder);
 
-            var (matchResult, obResult) = fifoOrderbook.Match();
+            var matchResult = fifoOrderbook.Match();
 
             Assert.AreEqual(2, matchResult.Fills.Count);
             Assert.AreEqual(1, matchResult.Trades.Count);
@@ -67,7 +67,7 @@ namespace OrderbookCSTest
             fifoOrderbook.AddOrder(buyOrder2);
 
             // Asks wiped out.
-            var (matchResult, obResult) = fifoOrderbook.Match();
+            var matchResult = fifoOrderbook.Match();
 
             Assert.AreEqual(4, matchResult.Fills.Count);
             Assert.AreEqual(2, matchResult.Trades.Count);
@@ -92,7 +92,7 @@ namespace OrderbookCSTest
             fifoOrderbook.AddOrder(buyOrder);
             fifoOrderbook.AddOrder(buyOrder2);
 
-            var (matchResult, obResult) = fifoOrderbook.Match();
+            var matchResult = fifoOrderbook.Match();
             var spread = fifoOrderbook.GetSpread();
 
             Assert.AreEqual(4, matchResult.Fills.Count);
@@ -124,7 +124,7 @@ namespace OrderbookCSTest
             fifoOrderbook.AddOrder(buyOrder);
             fifoOrderbook.AddOrder(buyOrder2);
 
-            var (matchResult, obResult) = fifoOrderbook.Match();
+            var matchResult = fifoOrderbook.Match();
             var spread = fifoOrderbook.GetSpread();
 
             Assert.AreEqual(6, matchResult.Fills.Count);

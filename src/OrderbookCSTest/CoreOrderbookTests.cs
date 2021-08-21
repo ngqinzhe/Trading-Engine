@@ -58,33 +58,14 @@ namespace OrderbookCSTest
         }
 
         [TestMethod]
-        public void Orderbook_RemoveNonExistantOrder_RequestRejects()
-        {
-            // 1
-            const long orderId = 0;
-            Orderbook ob = new Orderbook(default);
-            var cancelOrder = new CancelOrder(new OrderCore(orderId, "Test", 1));
-            var res = ob.RemoveOrder(cancelOrder);
-
-            // 2
-            var firstReject = res.Rejections.First();
-            Rejection expectedRejection = new Rejection(cancelOrder, RejectionReason.OrderNotFound);
-
-            // 3
-            Assert.AreEqual(res.HasRejection, true);
-            Assert.AreEqual(expectedRejection.RejectionReason, firstReject.RejectionReason);
-            Assert.AreEqual(expectedRejection.OrderId, orderId);
-        }
-
-        [TestMethod]
         public void Orderbook_AddOrderThenModify_Success()
         {
             // 1
             const long orderId = 0;
             const uint modifyOrderQuantity = 5;
             Orderbook ob = new Orderbook(default);
-            _ = ob.AddOrder(new Order(new OrderCore(orderId, "Test", 1), 1_000, 10, true));
-            var res = ob.ChangeOrder(new ModifyOrder(new OrderCore(orderId, "Test", 1), 1_000, modifyOrderQuantity, true));
+            ob.AddOrder(new Order(new OrderCore(orderId, "Test", 1), 1_000, 10, true));
+            ob.ChangeOrder(new ModifyOrder(new OrderCore(orderId, "Test", 1), 1_000, modifyOrderQuantity, true));
 
             // 2
             var buyOrders = ob.GetBuyOrders();
@@ -101,8 +82,8 @@ namespace OrderbookCSTest
         {
             // 1
             Orderbook ob = new Orderbook(default);
-            _ = ob.AddOrder(new Order(new OrderCore(0, "Test", 1), 1_000, 10, true));
-            var res = ob.ChangeOrder(new ModifyOrder(new OrderCore(0, "Test", 1), 1_000, 5, false));
+            ob.AddOrder(new Order(new OrderCore(0, "Test", 1), 1_000, 10, true));
+            ob.ChangeOrder(new ModifyOrder(new OrderCore(0, "Test", 1), 1_000, 5, false));
 
             // 2
             int actual = ob.Count;
@@ -110,7 +91,6 @@ namespace OrderbookCSTest
 
             // 3
             Assert.AreEqual(expected, actual);
-            Assert.IsTrue(res.HasRejection);
         }
 
         [TestMethod]
@@ -118,8 +98,8 @@ namespace OrderbookCSTest
         {
             // 1
             Orderbook ob = new Orderbook(default);
-            _ = ob.AddOrder(new Order(new OrderCore(0, "Test", 1), 1_000, 10, true));
-            _ = ob.AddOrder(new Order(new OrderCore(1, "Test", 1), 999, 10, true));
+            ob.AddOrder(new Order(new OrderCore(0, "Test", 1), 1_000, 10, true));
+            ob.AddOrder(new Order(new OrderCore(1, "Test", 1), 999, 10, true));
 
             // 2
             var bidOrders = ob.GetBuyOrders();
@@ -136,8 +116,8 @@ namespace OrderbookCSTest
         {
             // 1
             Orderbook ob = new Orderbook(default);
-            _ = ob.AddOrder(new Order(new OrderCore(0, "Test", 1), 1_000, 10, false));
-            _ = ob.AddOrder(new Order(new OrderCore(1, "Test", 1), 1_001, 10, false));
+            ob.AddOrder(new Order(new OrderCore(0, "Test", 1), 1_000, 10, false));
+            ob.AddOrder(new Order(new OrderCore(1, "Test", 1), 1_001, 10, false));
 
             // 2
             var askOrders = ob.GetAskOrders();

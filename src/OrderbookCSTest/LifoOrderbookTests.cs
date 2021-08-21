@@ -26,7 +26,7 @@ namespace OrderbookCSTest
             LifoOrderbook.AddOrder(askOrder);
             LifoOrderbook.AddOrder(buyOrder);
 
-            var (matchResult, obResult) = LifoOrderbook.Match();
+            var matchResult = LifoOrderbook.Match();
 
             Assert.AreEqual(2, matchResult.Fills.Count);
             Assert.AreEqual(1, matchResult.Trades.Count);
@@ -46,7 +46,7 @@ namespace OrderbookCSTest
             LifoOrderbook.AddOrder(askOrder);
             LifoOrderbook.AddOrder(buyOrder);
 
-            var (matchResult, obResult) = LifoOrderbook.Match();
+            var matchResult = LifoOrderbook.Match();
 
             Assert.AreEqual(2, matchResult.Fills.Count);
             Assert.AreEqual(1, matchResult.Trades.Count);
@@ -70,7 +70,7 @@ namespace OrderbookCSTest
             LifoOrderbook.AddOrder(buyOrder2);
 
             // Asks wiped out.
-            var (matchResult, obResult) = LifoOrderbook.Match();
+            var matchResult = LifoOrderbook.Match();
 
             Assert.AreEqual(4, matchResult.Fills.Count);
             Assert.AreEqual(2, matchResult.Trades.Count);
@@ -95,7 +95,7 @@ namespace OrderbookCSTest
             LifoOrderbook.AddOrder(buyOrder);
             LifoOrderbook.AddOrder(buyOrder2);
 
-            var (matchResult, obResult) = LifoOrderbook.Match();
+            var matchResult = LifoOrderbook.Match();
             var spread = LifoOrderbook.GetSpread();
 
             Assert.AreEqual(4, matchResult.Fills.Count);
@@ -127,7 +127,7 @@ namespace OrderbookCSTest
             LifoOrderbook.AddOrder(buyOrder);
             LifoOrderbook.AddOrder(buyOrder2);
 
-            var (matchResult, obResult) = LifoOrderbook.Match();
+            var matchResult = LifoOrderbook.Match();
             var spread = LifoOrderbook.GetSpread();
 
             Assert.AreEqual(6, matchResult.Fills.Count);
@@ -160,7 +160,7 @@ namespace OrderbookCSTest
             LifoOrderbook.AddOrder(buyOrder);
             LifoOrderbook.AddOrder(buyOrder2);
 
-            var (matchResult, obResult) = LifoOrderbook.Match();
+            var matchResult = LifoOrderbook.Match();
             var spread = LifoOrderbook.GetSpread();
 
             Assert.AreEqual(6, matchResult.Fills.Count);

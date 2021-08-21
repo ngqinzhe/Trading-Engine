@@ -24,7 +24,7 @@ namespace OrderbookCSTest
             prorataOrderbook.AddOrder(askOrder);
             prorataOrderbook.AddOrder(buyOrder);
 
-            var (matchResult, obResult) = prorataOrderbook.Match();
+            var matchResult = prorataOrderbook.Match();
 
             Assert.AreEqual(2, matchResult.Fills.Count);
             Assert.AreEqual(1, matchResult.Trades.Count);
@@ -44,7 +44,7 @@ namespace OrderbookCSTest
             prorataOrderbook.AddOrder(askOrder);
             prorataOrderbook.AddOrder(buyOrder);
 
-            var (matchResult, obResult) = prorataOrderbook.Match();
+            var matchResult = prorataOrderbook.Match();
 
             Assert.AreEqual(2, matchResult.Fills.Count);
             Assert.AreEqual(1, matchResult.Trades.Count);
@@ -69,7 +69,7 @@ namespace OrderbookCSTest
             prorataOrderbook.AddOrder(buyOrder2);
 
             // Asks wiped out.
-            var (matchResult, obResult) = prorataOrderbook.Match();
+            var matchResult = prorataOrderbook.Match();
 
             Assert.AreEqual(4, matchResult.Fills.Count);
             Assert.AreEqual(2, matchResult.Trades.Count);
@@ -94,7 +94,7 @@ namespace OrderbookCSTest
             prorataOrderbook.AddOrder(buyOrder);
             prorataOrderbook.AddOrder(buyOrder2);
 
-            var (matchResult, obResult) = prorataOrderbook.Match();
+            var matchResult = prorataOrderbook.Match();
             var spread = prorataOrderbook.GetSpread();
 
             Assert.AreEqual(4, matchResult.Fills.Count);
@@ -124,7 +124,7 @@ namespace OrderbookCSTest
             prorataOrderbook.AddOrder(buyOrder);
             prorataOrderbook.AddOrder(buyOrder2);
 
-            var (matchResult, obResult) = prorataOrderbook.Match();
+            var matchResult = prorataOrderbook.Match();
             var spread = prorataOrderbook.GetSpread();
 
             Assert.AreEqual(4, matchResult.Fills.Count);
@@ -156,7 +156,7 @@ namespace OrderbookCSTest
             prorataOrderbook.AddOrder(buyOrder);
             prorataOrderbook.AddOrder(buyOrder2);
 
-            var (matchResult, obResult) = prorataOrderbook.Match();
+            var matchResult = prorataOrderbook.Match();
             var spread = prorataOrderbook.GetSpread();
 
             Assert.AreEqual(6, matchResult.Fills.Count);
@@ -194,7 +194,7 @@ namespace OrderbookCSTest
             prorataOrderbook.AddOrder(buyOrder2);
             prorataOrderbook.AddOrder(buyOrder3);
 
-            var (matchResult, obResult) = prorataOrderbook.Match();
+            var matchResult = prorataOrderbook.Match();
             var spread = prorataOrderbook.GetSpread();
 
             Assert.AreEqual(6, matchResult.Fills.Count);
