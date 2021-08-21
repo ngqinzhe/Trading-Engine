@@ -6,10 +6,4 @@
     <AssemblyName>TradingEngineServer.Instrument</AssemblyName>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Update="Security.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-  </ItemGroup>
-
 </Project>
