@@ -25,7 +25,7 @@ namespace TradingEngineServer.Core
             ITradingExchange exchange,
             ITextLogger textLogger)
         {
-            _engineConfiguration = engineConfiguration?.Value ?? throw new ArgumentNullException(nameof(engineConfiguration));
+            _engineConfiguration = engineConfiguration.Value ?? throw new ArgumentNullException(nameof(engineConfiguration));
             _exchange = exchange ?? throw new ArgumentNullException(nameof(exchange));
             _textLogger = textLogger ?? throw new ArgumentNullException(nameof(textLogger));
 

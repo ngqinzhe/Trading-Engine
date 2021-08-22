@@ -19,10 +19,10 @@ namespace TradingEngineServer.Orderbook
             };
         }
 
-        public static MatchingOrderbook CreateOrderbook(Security inst, AllocationAlgorithm fillAllocationAlgorithm)
+        public static MatchingOrderbook CreateOrderbook(Security inst)
         {
             var retrievalOrderbook = new Orderbook(inst);
-            return CreateOrderbook(retrievalOrderbook, fillAllocationAlgorithm);
+            return CreateOrderbook(retrievalOrderbook, inst.AllocationAlgorithm);
         }
     }
 }
