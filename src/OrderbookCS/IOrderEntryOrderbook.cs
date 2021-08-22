@@ -9,14 +9,14 @@ namespace TradingEngineServer.Orderbook
     {
         bool ContainsOrder(long orderId);
         bool TryGetOrder(long orderId, out Order order);
+        OrderbookSpread GetSpread();
+        int Count { get; }
     }
     public interface IOrderEntryOrderbook : IReadOnlyOrderbook
     {
         void AddOrder(Order order);
         void ChangeOrder(ModifyOrder modifyOrder);
         void RemoveOrder(CancelOrder cancelOrder);
-        OrderbookSpread GetSpread();
-        int Count { get; }
     }
 
     public interface IRetrievalOrderbook : IOrderEntryOrderbook
