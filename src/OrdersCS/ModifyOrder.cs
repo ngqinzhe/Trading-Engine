@@ -44,6 +44,12 @@ namespace TradingEngineServer.Orders
             return Cloner<ModifyOrder>.CreateDeepCopy(this);
         }
 
+        // TOSTRING //
+        public override string ToString()
+        {
+            return $"[{_orderBase}] Price: {Price}, Quantity: {Quantity}, IsBuySide: {IsBuySide}";
+        }
+
         // FIELDS //
 
         private readonly IOrderCore _orderBase;
