@@ -4,26 +4,26 @@ using System.Text;
 
 namespace TradingEngineServer.Orders.OrderStatuses
 {
-    public class CancelOrderStatus : IOrderStatus
+    public class CancelOrderStatus : ICancelOrderStatus
     {
-        public CancelOrderStatus(IOrderCore orderCore)
+        public CancelOrderStatus(CancelOrder cancelOrder)
         {
             // PROPERTIES //
             CreationTime = DateTime.UtcNow;
 
             // FIELDS //
-            _orderCore = orderCore;
+            _cancelOrder = cancelOrder;
         }
 
         // PROPERTIES //
 
         public DateTime CreationTime { get; private set; }
-        public long OrderId => _orderCore.OrderId;
-        public string Username => _orderCore.Username;
-        public int SecurityId => _orderCore.SecurityId;
+        public long OrderId => _cancelOrder.OrderId;
+        public string Username => _cancelOrder.Username;
+        public int SecurityId => _cancelOrder.SecurityId;
 
         // FIELDS //
 
-        private readonly IOrderCore _orderCore;
+        private readonly CancelOrder _cancelOrder;
     }
 }

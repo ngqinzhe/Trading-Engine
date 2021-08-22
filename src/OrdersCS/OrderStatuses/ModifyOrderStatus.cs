@@ -4,26 +4,29 @@ using System.Text;
 
 namespace TradingEngineServer.Orders.OrderStatuses
 {
-    public class ModifyOrderStatus : IOrderStatus
+    public class ModifyOrderStatus : IModifyOrderStatus
     {
-        public ModifyOrderStatus(IOrderCore orderCore)
+        public ModifyOrderStatus(ModifyOrder modifyOrder)
         {
             // PROPERTIES //
             CreationTime = DateTime.UtcNow;
 
             // FIELDS //
-            _orderCore = orderCore;
+            _modifyOrder = modifyOrder;
         }
 
         // PROPERTIES //
 
         public DateTime CreationTime { get; private set; }
-        public long OrderId => _orderCore.OrderId;
-        public string Username => _orderCore.Username;
-        public int SecurityId => _orderCore.SecurityId;
+        public long OrderId => _modifyOrder.OrderId;
+        public string Username => _modifyOrder.Username;
+        public int SecurityId => _modifyOrder.SecurityId;
+        public long Price => _modifyOrder.Price;
+        public uint Quantity => _modifyOrder.Quantity;
+        public bool IsBuySide => _modifyOrder.IsBuySide;
 
         // FIELDS //
 
-        private readonly IOrderCore _orderCore;
+        private readonly ModifyOrder _modifyOrder;
     }
 }
