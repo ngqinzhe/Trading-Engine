@@ -13,13 +13,17 @@ namespace OrderbookCSTest
     public class LifoOrderbookTests
     {
         private static readonly IOrderCore _testOrderBase = new OrderCore(0, "Test Username", 0);
+        private static readonly Security _security = new Security()
+        {
+            AllocationAlgorithm = AllocationAlgorithm.Lifo,
+        };
 
         [TestMethod]
         public void LifoOrderbook_MatchTwoOrders_PerfectMatch()
         {
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
-            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Lifo);
+            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 10, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 10, true);
 
@@ -39,7 +43,7 @@ namespace OrderbookCSTest
         {
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
-            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Lifo);
+            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 10, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
 
@@ -60,7 +64,7 @@ namespace OrderbookCSTest
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
             const long secondbuyOrderOrderId = 2;
-            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Lifo);
+            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 20, false); // Sell side hits 2 bids
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
             var buyOrder2 = new Order(new OrderCore(secondbuyOrderOrderId, string.Empty, 0), 10_001, 15, true);
@@ -86,7 +90,7 @@ namespace OrderbookCSTest
             const long buyOrderOrderId = 1;
             const long secondbuyOrderOrderId = 2;
             const long askPrice = 10_000;
-            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Lifo);
+            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 100, false); // Masive ask wall.
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
             var buyOrder2 = new Order(new OrderCore(secondbuyOrderOrderId, string.Empty, 0), 10_001, 15, true);
@@ -116,7 +120,7 @@ namespace OrderbookCSTest
             const long secondbuyOrderOrderId = 3;
             const long askPrice = 10_000;
             const long bidPrice = 10_001;
-            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Lifo);
+            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 10, false);
             var askOrder2 = new Order(new OrderCore(secondAskOrderOrderId, string.Empty, 0), askPrice, 20, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), bidPrice, 15, true);
@@ -149,7 +153,7 @@ namespace OrderbookCSTest
             const long secondbuyOrderOrderId = 3;
             const long askPrice = 10_000;
             const long bidPrice = 10_001;
-            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Lifo);
+            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 15, false);
             var askOrder2 = new Order(new OrderCore(secondAskOrderOrderId, string.Empty, 0), askPrice, 20, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), bidPrice, 15, true);

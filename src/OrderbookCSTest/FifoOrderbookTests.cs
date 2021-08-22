@@ -10,13 +10,17 @@ namespace OrderbookCSTest
     public class FifoOrderbookTests
     {
         private static readonly IOrderCore _testOrderBase = new OrderCore(0, "Test Username", 0);
+        private static readonly Security _fifoSecurity = new Security()
+        {
+            AllocationAlgorithm = AllocationAlgorithm.Fifo,
+        };
 
         [TestMethod]
         public void FifoOrderbook_MatchTwoOrders_PerfectMatch()
         {
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(_fifoSecurity);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 10, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 10, true);
 
@@ -36,7 +40,7 @@ namespace OrderbookCSTest
         {
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(_fifoSecurity);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 10, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
 
@@ -57,7 +61,7 @@ namespace OrderbookCSTest
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
             const long secondbuyOrderOrderId = 2;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(_fifoSecurity);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 20, false); // Sell side hits 2 bids
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
             var buyOrder2 = new Order(new OrderCore(secondbuyOrderOrderId, string.Empty, 0), 10_001, 15, true);
@@ -83,7 +87,7 @@ namespace OrderbookCSTest
             const long buyOrderOrderId = 1;
             const long secondbuyOrderOrderId = 2;
             const long askPrice = 10_000;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(_fifoSecurity);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 100, false); // Masive ask wall.
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
             var buyOrder2 = new Order(new OrderCore(secondbuyOrderOrderId, string.Empty, 0), 10_001, 15, true);
@@ -113,7 +117,7 @@ namespace OrderbookCSTest
             const long secondbuyOrderOrderId = 3;
             const long askPrice = 10_000;
             const long bidPrice = 10_001;
-            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.Fifo);
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(_fifoSecurity);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 10, false);
             var askOrder2 = new Order(new OrderCore(secondAskOrderOrderId, string.Empty, 0), askPrice, 20, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), bidPrice, 15, true);

@@ -12,12 +12,17 @@ namespace OrderbookCSTest
     [TestClass]
     public class ProRataOrderbookTests
     {
+        private static readonly Security _security = new Security()
+        {
+            AllocationAlgorithm = AllocationAlgorithm.ProRata,
+        };
+
         [TestMethod]
         public void ProRataOrderbook_MatchTwoOrders_PerfectMatch()
         {
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
-            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.ProRata);
+            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 10, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 10, true);
 
@@ -37,7 +42,7 @@ namespace OrderbookCSTest
         {
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
-            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.ProRata);
+            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 10, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
 
@@ -58,7 +63,7 @@ namespace OrderbookCSTest
             const long askOrderOrderId = 0;
             const long buyOrderOrderId = 1;
             const long secondbuyOrderOrderId = 2;
-            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.ProRata);
+            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), 10_000, 20, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
             // Later buy order matched first because it is on the same price level as the previous and has a higher quantity
@@ -85,7 +90,7 @@ namespace OrderbookCSTest
             const long buyOrderOrderId = 1;
             const long secondbuyOrderOrderId = 2;
             const long askPrice = 10_000;
-            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.ProRata);
+            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 100, false); // Masive ask wall.
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), 10_001, 15, true);
             var buyOrder2 = new Order(new OrderCore(secondbuyOrderOrderId, string.Empty, 0), 10_001, 15, true);
@@ -114,7 +119,7 @@ namespace OrderbookCSTest
             const long secondbuyOrderOrderId = 2;
             const long askPrice = 10_000;
             const long bidPrice = 10_001;
-            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.ProRata);
+            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 16, false);
             // Two buy orders have the same quantity, relative ordering is preserved and first buyOrder is matched first.
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), bidPrice, 15, true);
@@ -145,7 +150,7 @@ namespace OrderbookCSTest
             const long secondbuyOrderOrderId = 3;
             const long askPrice = 10_000;
             const long bidPrice = 10_001;
-            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.ProRata);
+            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 10, false);
             var askOrder2 = new Order(new OrderCore(secondAskOrderOrderId, string.Empty, 0), askPrice, 20, false);
             var buyOrder = new Order(new OrderCore(buyOrderOrderId, string.Empty, 0), bidPrice, 15, true);
@@ -179,7 +184,7 @@ namespace OrderbookCSTest
             const long thirdBuyOrderId = 4; // 
             const long askPrice = 10_000;
             const long bidPrice = 10_001;
-            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(null as Security, AllocationAlgorithm.ProRata);
+            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(_security);
             var askOrder = new Order(new OrderCore(askOrderOrderId, string.Empty, 0), askPrice, 10, false);
             // Second ask order has higher quantity that the total of the resting bids. It gets fully filled
             // and the first askOrder remains resting with a quantity of 1.
