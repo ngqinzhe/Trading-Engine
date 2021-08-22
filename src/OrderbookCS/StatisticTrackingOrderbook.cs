@@ -19,25 +19,25 @@ namespace TradingEngineServer.Orderbook
     /// </summary>
     public class StatisticTrackingOrderbook : IMatchingOrderbook, IStatisticsTrackingOrderbook
     {
-        public StatisticTrackingOrderbook(Security security, Fills.FillAllocationAlgorithm faa)
+        public StatisticTrackingOrderbook(Security security)
         {
-            _underlyingOrderbook = OrderbookFactory.CreateOrderbook(security, faa);
+            _underlyingOrderbook = OrderbookFactory.CreateOrderbook(security);
             _securityStatistics = new SecurityStatistics(security);
         }
 
-        public OrderbookResult AddOrder(Order order)
+        public void AddOrder(Order order)
         {
-            return _underlyingOrderbook.AddOrder(order);
+            _underlyingOrderbook.AddOrder(order);
         }
 
-        public OrderbookResult ChangeOrder(ModifyOrder modifyOrder)
+        public void ChangeOrder(ModifyOrder modifyOrder)
         {
-            return _underlyingOrderbook.ChangeOrder(modifyOrder);
+            _underlyingOrderbook.ChangeOrder(modifyOrder);
         }
 
-        public bool ContainsOrder(long orderId)
+        public void RemoveOrder(CancelOrder cancelOrder)
         {
-            return _underlyingOrderbook.ContainsOrder(orderId);
+            _underlyingOrderbook.RemoveOrder(cancelOrder);
         }
 
         public OrderbookSpread GetSpread()
@@ -45,17 +45,22 @@ namespace TradingEngineServer.Orderbook
             return _underlyingOrderbook.GetSpread();
         }
 
-        public OrderbookResult RemoveOrder(CancelOrder cancelOrder)
+        public bool TryGetOrder(long orderId, out Order order)
         {
-            return _underlyingOrderbook.RemoveOrder(cancelOrder);
+            return _underlyingOrderbook.TryGetOrder(orderId, out order);
+        }
+
+        public bool ContainsOrder(long orderId)
+        {
+            return _underlyingOrderbook.ContainsOrder(orderId);
         }
 
         public int Count => _underlyingOrderbook.Count;
 
-        public (MatchResult MatchResult, OrderbookResult OrderbookResult) Match()
+        public MatchResult Match()
         {
             var results = _underlyingOrderbook.Match();
-            LogMatchStatistics(_securityStatistics, results.MatchResult);
+            LogMatchStatistics(_securityStatistics, results);
             return results;
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using TradingEngineServer.Fills;
+using TradingEngineServer.Instrument;
 using TradingEngineServer.OrderbookData;
 using TradingEngineServer.Orders;
 using TradingEngineServer.Trades;
@@ -54,7 +55,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 // TODO: This is duplicate code in all matching algorithms.
                 // Think of refactoring this by including it elsewhere
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
-                    fillQuantity, FillAllocationAlgorithm.Lifo, eventTime);
+                    fillQuantity, AllocationAlgorithm.Lifo, eventTime);
                 matchResult.AddTradeResult(tradeResult);
                 bool buySideIsAggressor = orderToMatchBid.CreationTime > orderToMatchAsk.CreationTime;
                 Limit relevantOrderbookLimit = buySideIsAggressor ? orderToMatchAsk.ParentLimit : orderToMatchBid.ParentLimit;

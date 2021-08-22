@@ -6,6 +6,6 @@ namespace TradingEngineServer.Orderbook
 {
     public interface IMatchingOrderbook : IOrderEntryOrderbook
     {
-        (MatchResult MatchResult, OrderbookResult OrderbookResult) Match();
+        MatchResult Match();
     }
 }

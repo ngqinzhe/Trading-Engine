@@ -29,16 +29,27 @@ namespace TradingEngineServer.Orderbook
             }
         }
 
-        public OrderbookResult AddOrder(Order order)
+        public void AddOrder(Order order)
         {
             lock (_lock)
-                return _orderbook.AddOrder(order);
+                _orderbook.AddOrder(order);
         }
 
-        public OrderbookResult ChangeOrder(ModifyOrder modifyOrder)
+        public void ChangeOrder(ModifyOrder modifyOrder)
         {
             lock (_lock)
-                return _orderbook.ChangeOrder(modifyOrder);
+                _orderbook.ChangeOrder(modifyOrder);
+        }
+
+        public void RemoveOrder(CancelOrder cancelOrder)
+        {
+            lock (_lock)
+                _orderbook.RemoveOrder(cancelOrder);
+        }
+
+        public bool TryGetOrder(long orderId, out Order order)
+        {
+            return _orderbook.TryGetOrder(orderId, out order);
         }
 
         public bool ContainsOrder(long orderId)
@@ -53,15 +64,8 @@ namespace TradingEngineServer.Orderbook
                 return _orderbook.GetSpread();
         }
 
-        public OrderbookResult RemoveOrder(CancelOrder cancelOrder)
+        public MatchResult Match()
         {
-            lock (_lock)
-                return _orderbook.RemoveOrder(cancelOrder);
-        }
-
-        public (MatchResult MatchResult, OrderbookResult OrderbookResult) Match()
-        {
-            OrderbookResult obr = new OrderbookResult();
             lock (_lock)
             {
                 var bids = _orderbook.GetBuyOrders();
@@ -71,9 +75,9 @@ namespace TradingEngineServer.Orderbook
                 // Remove all fully filled orders from the book.
                 var fullyFilledOrders = matchResult.Fills.Where(f => f.IsCompleteFill);
                 foreach (var fullyFilledOrder in fullyFilledOrders)
-                    obr.Merge(_orderbook.RemoveOrder(new CancelOrder(fullyFilledOrder.OrderBase)));
+                    _orderbook.RemoveOrder(new CancelOrder(fullyFilledOrder.OrderBase));
 
-                return (matchResult, obr);
+                return matchResult;
             }
         }
     }

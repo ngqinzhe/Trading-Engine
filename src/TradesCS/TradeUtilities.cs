@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TradingEngineServer.Fills;
+using TradingEngineServer.Instrument;
 using TradingEngineServer.Orders;
 
 namespace TradingEngineServer.Trades
@@ -9,7 +10,7 @@ namespace TradingEngineServer.Trades
     public sealed class TradeUtilities
     {
         public static TradeResult CreateTradeAndFills(Order bidOrder, Order askOrder, 
-            uint fillQuantity, FillAllocationAlgorithm fillAlocAlgo, DateTime eventTime)
+            uint fillQuantity, AllocationAlgorithm fillAlocAlgo, DateTime eventTime)
         {
             var tradeNumber = TradeIdGenerator.GenerateTradeId();
             var fillsIds = GetFillIds(tradeNumber);
@@ -18,7 +19,7 @@ namespace TradingEngineServer.Trades
             var buyFill = new Fill()
             {
                 EventTime = eventTime,
-                FillAllocationAlgorithm = fillAlocAlgo,
+                AllocationAlgorithm = fillAlocAlgo,
                 FillQuantity = fillQuantity,
                 IsCompleteFill = bidOrder.CurrentQuantity == 0,
                 FillId = fillsIds.FirstFillId,
@@ -29,7 +30,7 @@ namespace TradingEngineServer.Trades
             var askFill = new Fill()
             {
                 EventTime = eventTime,
-                FillAllocationAlgorithm = fillAlocAlgo,
+                AllocationAlgorithm = fillAlocAlgo,
                 FillQuantity = fillQuantity,
                 IsCompleteFill = askOrder.CurrentQuantity == 0,
                 FillId = fillsIds.SecondFillId,

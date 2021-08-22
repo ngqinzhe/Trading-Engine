@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ExchangeCS\ExchangeCS.csproj" />
     <ProjectReference Include="..\LoggingCS\LoggingCS.csproj" />
-    <ProjectReference Include="..\OrderbookCS\OrderbookCS.csproj" />
   </ItemGroup>
 
   <ItemGroup>

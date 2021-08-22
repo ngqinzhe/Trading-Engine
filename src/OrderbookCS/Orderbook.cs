@@ -26,58 +26,45 @@ namespace TradingEngineServer.Orderbook
 
         // PUBLIC ITNERFACE METHODS //
 
-        public OrderbookResult AddOrder(Order order)
+        public void AddOrder(Order order)
         {
-            OrderbookResult ar = new OrderbookResult();
             var baseLimit = new Limit() { Price = order.Price, };
             AddOrder(order, baseLimit, order.IsBuySide ? _bidLimits : _askLimits, _orders);
-            ar.AddNewOrderStatus(OrderStatusCreator.GenerateNewOrderStatus(order));
-            return ar;
         }
 
-        public OrderbookResult ChangeOrder(ModifyOrder modifyOrder)
+        public void ChangeOrder(ModifyOrder modifyOrder)
         {
             // Push them to the back of the queue regardless of what they want to change.
-            OrderbookResult ar = new OrderbookResult();
             if (_orders.TryGetValue(modifyOrder.OrderId, out var obe))
             {
-                if (modifyOrder.IsBuySide != obe.Current.IsBuySide)
-                {
-                    ar.AddRejection(RejectionCreator.GenerateOrderCoreReject(modifyOrder, RejectionReason.AttemptingToModifyWrongSide));
-                    return ar;
-                }
-
                 RemoveOrder(modifyOrder.ToCancelOrder(), obe, _orders);
                 AddOrder(modifyOrder.ToNewOrder(), obe.ParentLimit, modifyOrder.IsBuySide ? _bidLimits : _askLimits, _orders);
             }
-            else
-            {
-                // Reject, trying to modify an order that doesn't exist!
-                ar.AddRejection(RejectionCreator.GenerateOrderCoreReject(modifyOrder, RejectionReason.OrderNotFound));
-                return ar;
-            }
-            ar.AddModifyOrderStatus(OrderStatusCreator.GenerateModifyOrderStatus(modifyOrder));
-            return ar;
         }
 
-        public OrderbookResult RemoveOrder(CancelOrder cancelOrder)
+        public void RemoveOrder(CancelOrder cancelOrder)
         {
-            OrderbookResult ar = new OrderbookResult();
             if (_orders.TryGetValue(cancelOrder.OrderId, out OrderbookEntry obe))
             {
                 RemoveOrder(cancelOrder, obe, _orders);
-                ar.AddCancelOrderStatus(OrderStatusCreator.GenerateOrderCancelStatus(cancelOrder));
             }
-            else
-            {
-                ar.AddRejection(RejectionCreator.GenerateOrderCoreReject(cancelOrder, RejectionReason.OrderNotFound));
-            }
-            return ar;
         }
 
         public bool ContainsOrder(long orderId)
         {
             return _orders.ContainsKey(orderId);
+        }
+
+        public bool TryGetOrder(long orderId, out Order order)
+        {
+            if (_orders.TryGetValue(orderId, out var entry))
+            {
+                // Create a copy as to not allow the client to alter the state of the order.
+                order = entry.Current.Clone();
+                return true;
+            }
+            order = null;
+            return false;
         }
 
         public int Count

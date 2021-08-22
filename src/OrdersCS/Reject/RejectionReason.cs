@@ -8,6 +8,7 @@ namespace TradingEngineServer.Rejects
     {
         Unknown,
         OrderNotFound,
+        OrderIdAlreadyPresent,
         InstrumentNotFound,
         AttemptingToModifyWrongSide,
     }

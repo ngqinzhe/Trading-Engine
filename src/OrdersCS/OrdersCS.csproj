@@ -7,4 +7,8 @@
     <AssemblyName>TradingEngineServer.Orders</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CommonCS\CommonCS.csproj" />
+  </ItemGroup>
+
 </Project>

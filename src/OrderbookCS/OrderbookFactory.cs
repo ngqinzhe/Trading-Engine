@@ -8,21 +8,21 @@ namespace TradingEngineServer.Orderbook
 {
     public class OrderbookFactory
     {
-        public static MatchingOrderbook CreateOrderbook(IRetrievalOrderbook ob, FillAllocationAlgorithm fillAllocationAlgorithm)
+        public static MatchingOrderbook CreateOrderbook(IRetrievalOrderbook ob, AllocationAlgorithm fillAllocationAlgorithm)
         {
             return fillAllocationAlgorithm switch
             {
-                FillAllocationAlgorithm.Fifo => new FifoOrderbook(ob),
-                FillAllocationAlgorithm.Lifo => new LifoOrderbook(ob),
-                FillAllocationAlgorithm.ProRata => new ProRataOrderbook(ob),
+                AllocationAlgorithm.Fifo => new FifoOrderbook(ob),
+                AllocationAlgorithm.Lifo => new LifoOrderbook(ob),
+                AllocationAlgorithm.ProRata => new ProRataOrderbook(ob),
                 _ => throw new InvalidOperationException($"Unknown FillAllocationAlgorithm ({fillAllocationAlgorithm})"),
             };
         }
 
-        public static MatchingOrderbook CreateOrderbook(Security inst, FillAllocationAlgorithm fillAllocationAlgorithm)
+        public static MatchingOrderbook CreateOrderbook(Security inst)
         {
             var retrievalOrderbook = new Orderbook(inst);
-            return CreateOrderbook(retrievalOrderbook, fillAllocationAlgorithm);
+            return CreateOrderbook(retrievalOrderbook, inst.AllocationAlgorithm);
         }
     }
 }

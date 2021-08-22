@@ -7,6 +7,7 @@ using TradingEngineServer.Trades;
 using TradingEngineServer.Orderbook.MatchingAlgorithm.OrderbookIterator;
 using TradingEngineServer.Orders;
 using TradingEngineServer.OrderbookData;
+using TradingEngineServer.Instrument;
 
 namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 {
@@ -62,7 +63,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 // TODO: This is duplicate code in all matching algorithms.
                 // Think of refactoring this by including it elsewhere
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
-                    fillQuantity, FillAllocationAlgorithm.ProRata, eventTime);
+                    fillQuantity, AllocationAlgorithm.ProRata, eventTime);
                 matchResult.AddTradeResult(tradeResult);
                 bool buySideIsAggressor = orderToMatchBid.CreationTime > orderToMatchAsk.CreationTime;
                 Limit relevantOrderbookLimit = buySideIsAggressor ? orderToMatchAsk.ParentLimit : orderToMatchBid.ParentLimit;
