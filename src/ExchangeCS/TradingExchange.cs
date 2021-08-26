@@ -31,9 +31,9 @@ namespace TradingEngineServer.Exchange
             return _exchangeName;
         }
 
-        public bool TryGetOrderbook(Security security, out IMatchingOrderbook orderbook)
+        public bool TryGetOrderbook(int securityId, out IMatchingOrderbook orderbook)
         {
-            return _orderbooks.TryGetValue(security.SecurityId, out orderbook);
+            return _orderbooks.TryGetValue(securityId, out orderbook);
         }
 
         private readonly int _exchangeId;

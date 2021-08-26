@@ -6,9 +6,9 @@ using TradingEngineServer.Rejects;
 
 namespace TradingEngineServer.Orderbook
 {
-    public class RejectGenerator : IRejectGenerator
+    public sealed class RejectGenerator
     {
-        public bool TryRejectCancelOrder(CancelOrder cancelOrder, IReadOnlyOrderbook orderbook, out Rejection rejection)
+        public static bool TryRejectCancelOrder(CancelOrder cancelOrder, IReadOnlyOrderbook orderbook, out Rejection rejection)
         {
             if (!orderbook.ContainsOrder(cancelOrder.OrderId))
             {
@@ -19,9 +19,20 @@ namespace TradingEngineServer.Orderbook
             return false;
         }
 
-        public bool TryRejectModifyOrder(ModifyOrder modifyOrder, IReadOnlyOrderbook orderbook, out Rejection rejection)
+        public static bool TryRejectModifyOrder(ModifyOrder modifyOrder, IReadOnlyOrderbook orderbook, out Rejection rejection)
         {
-            if (!orderbook.ContainsOrder(modifyOrder.OrderId))
+            var modifyOrderType = orderbook.GetModifyOrderType(modifyOrder);
+            if (modifyOrderType == ModifyOrderType.NoChange)
+            {
+                rejection = RejectionCreator.GenerateOrderCoreReject(modifyOrder, RejectionReason.ModifyOrderDoesntModifyAnything);
+                return true;
+            }
+            else if (modifyOrderType == ModifyOrderType.Unknown)
+            {
+                rejection = RejectionCreator.GenerateOrderCoreReject(modifyOrder, RejectionReason.OrderNotFound);
+                return true;
+            }
+            else if (!orderbook.ContainsOrder(modifyOrder.OrderId))
             {
                 rejection = RejectionCreator.GenerateOrderCoreReject(modifyOrder, RejectionReason.OrderNotFound);
                 return true;
@@ -34,11 +45,12 @@ namespace TradingEngineServer.Orderbook
                     return true;
                 }
             }
+
             rejection = null;
             return false;
         }
 
-        public bool TryRejectNewOrder(Order order, IReadOnlyOrderbook orderbook, out Rejection rejection)
+        public static bool TryRejectNewOrder(Order order, IReadOnlyOrderbook orderbook, out Rejection rejection)
         {
             if (orderbook.ContainsOrder(order.OrderId))
             {

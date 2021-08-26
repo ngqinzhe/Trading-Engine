@@ -9,7 +9,7 @@ namespace TradingEngineServer.Exchange
 {
     public interface IOrderbookRetriever
     {
-        bool TryGetOrderbook(Security security, out IMatchingOrderbook orderbook);
+        bool TryGetOrderbook(int securityId, out IMatchingOrderbook orderbook);
     }
 
     public interface ITradingExchange : IOrderbookRetriever

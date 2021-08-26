@@ -20,6 +20,12 @@ namespace TradingEngineServer.Orders
             return Cloner<CancelOrder>.CreateDeepCopy(this);
         }
 
+        // TOSTRING //
+        public override string ToString()
+        {
+            return $"[{_orderBase}]";
+        }
+
         private readonly IOrderCore _orderBase;
     }
 }
