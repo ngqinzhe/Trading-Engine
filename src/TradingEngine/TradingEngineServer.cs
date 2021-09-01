@@ -12,10 +12,13 @@ using System.Threading.Tasks;
 using TradingEngineServer.Core.Configuration;
 using TradingEngineServer.Logging;
 using TradingEngineServer.Exchange;
-using TradingEngineServer.Server;
 using TradingEngineServer.Orders;
 using TradingEngineServer.Orderbook;
 using TradingEngineServer.Rejects;
+
+using TradingEngineServer.OrderEntryCommunication;
+using System.Linq;
+using TradingEngineServer.Orders.OrderStatuses;
 
 namespace TradingEngineServer.Core
 {
@@ -34,7 +37,6 @@ namespace TradingEngineServer.Core
             _textLogger = textLogger ?? throw new ArgumentNullException(nameof(textLogger));
 
         }
-
         public Task<ExchangeResult> ProcessOrderAsync(Order order)
         {
             _textLogger.Information(nameof(TradingEngineServer), $"Handling NewOrder: {order}");
@@ -91,13 +93,24 @@ namespace TradingEngineServer.Core
             else return Task.FromResult(ExchangeResult.CreateExchangeResult(RejectionCreator.GenerateOrderCoreReject(cancelOrder, RejectionReason.OrderbookNotFound)));
         }
 
+        public Task CancelAllAsync(List<IOrderStatus> orderStatuses)
+        {
+            _textLogger.Information(nameof(TradingEngineServer), $"Unsolicited cancel for all active orders: {string.Join(", ", orderStatuses.Select(x => x.OrderId))}");
+            var cancelTasks = orderStatuses.Select(x =>
+            {
+                return ProcessOrderAsync(new CancelOrder(x));
+            });
+            return Task.WhenAll(cancelTasks);
+        }
+
+
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _textLogger.Information(nameof(TradingEngineServer), $"Starting Trading Engine");
+            using EdenOrderEntryServer oeServer = new EdenOrderEntryServer(this, _engineConfiguration.OrderEntryServer.Port);
+            oeServer.Start();
             while (!stoppingToken.IsCancellationRequested)
-            {
-
-            }
+            { }
             _textLogger.Information(nameof(TradingEngineServer), $"Stopping Trading Engine");
             return Task.CompletedTask;
         }
