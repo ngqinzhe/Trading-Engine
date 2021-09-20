@@ -52,15 +52,8 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 orderToMatchBid.Current.DecreaseQuantity(fillQuantity);
                 orderToMatchAsk.Current.DecreaseQuantity(fillQuantity);
 
-                // TODO: This is duplicate code in all matching algorithms.
-                // Think of refactoring this by including it elsewhere
-                var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
-                    fillQuantity, AllocationAlgorithm.Fifo, eventTime);
-                matchResult.AddTradeResult(tradeResult);
-                bool buySideIsAggressor = orderToMatchBid.CreationTime > orderToMatchAsk.CreationTime;
-                Limit relevantOrderbookLimit = buySideIsAggressor ? orderToMatchAsk.ParentLimit : orderToMatchBid.ParentLimit;
-                var orderbookUpdate = OrderbookUtilities.CreateIncrementalOrderbookUpdate(relevantOrderbookLimit, eventTime);
-                matchResult.AddIncrementalOrderbookUpdate(orderbookUpdate);
+                // Replaced duplicate code
+                OrderbookUpdate.Update(orderToMatchBid, orderToMatchAsk, fillQuantity, eventTime, matchResult);
 
                 // Lets move on!
                 if (tradeResult.BuyFill.IsCompleteFill)
