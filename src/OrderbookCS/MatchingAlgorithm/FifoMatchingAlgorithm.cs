@@ -56,11 +56,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 // Think of refactoring this by including it elsewhere
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
                     fillQuantity, AllocationAlgorithm.Fifo, eventTime);
-                matchResult.AddTradeResult(tradeResult);
-                bool buySideIsAggressor = orderToMatchBid.CreationTime > orderToMatchAsk.CreationTime;
-                Limit relevantOrderbookLimit = buySideIsAggressor ? orderToMatchAsk.ParentLimit : orderToMatchBid.ParentLimit;
-                var orderbookUpdate = OrderbookUtilities.CreateIncrementalOrderbookUpdate(relevantOrderbookLimit, eventTime);
-                matchResult.AddIncrementalOrderbookUpdate(orderbookUpdate);
+                OrderbookUpdate.Update(matchResult, tradeResult, orderToMatchBid, orderToMatchAsk, eventTime);
 
                 // Lets move on!
                 if (tradeResult.BuyFill.IsCompleteFill)
