@@ -59,17 +59,13 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 
                 orderToMatchBid.Current.DecreaseQuantity(fillQuantity);
                 orderToMatchAsk.Current.DecreaseQuantity(fillQuantity);
-<<<<<<< HEAD
 
                 // TODO: This is duplicate code in all matching algorithms.
                 // Think of refactoring this by including it elsewhere
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
                     fillQuantity, AllocationAlgorithm.ProRata, eventTime);
-                OrderbookUpdate.Update(matchResult, tradeResult, orderToMatchBid, orderToMatchAsk, eventTime);
-=======
-                // Replaced duplicate code
-                OrderbookUpdate.Update(orderToMatchBid, orderToMatchAsk, fillQuantity, eventTime, matchResult);
->>>>>>> 4a4d7985e67493fdb53cf976f4822cf6bd706177
+                matchResult = MatchResultUpdate.Update(matchResult, tradeResult, orderToMatchBid, orderToMatchAsk, eventTime);
+
 
                 if (tradeResult.BuyFill.IsCompleteFill)
                 {
