@@ -7,8 +7,9 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 {
     internal class MatchResultCreator
     {
-        public static MatchResult CreateMatchResult(MatchResult matchResult, TradeResult tradeResult, OrderbookEntry orderToMatchBid, OrderbookEntry orderToMatchAsk, DateTime eventTime)
+        public static MatchResult CreateMatchResult(TradeResult tradeResult, OrderbookEntry orderToMatchBid, OrderbookEntry orderToMatchAsk, DateTime eventTime)
         {
+            MatchResult matchResult = new MatchResult();
             matchResult.AddTradeResult(tradeResult);
             bool buySideIsAggressor = orderToMatchBid.CreationTime > orderToMatchAsk.CreationTime;
             Limit relevantOrderbookLimit = buySideIsAggressor ? orderToMatchAsk.ParentLimit : orderToMatchBid.ParentLimit;
