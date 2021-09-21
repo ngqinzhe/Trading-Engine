@@ -5,9 +5,9 @@ using TradingEngineServer.Trades;
 
 namespace TradingEngineServer.Orderbook.MatchingAlgorithm
 {
-    internal class MatchResultUpdate
+    internal class MatchResultCreator
     {
-        public static MatchResult Update(MatchResult matchResult, TradeResult tradeResult, OrderbookEntry orderToMatchBid, OrderbookEntry orderToMatchAsk, DateTime eventTime)
+        public static MatchResult CreateMatchResult(MatchResult matchResult, TradeResult tradeResult, OrderbookEntry orderToMatchBid, OrderbookEntry orderToMatchAsk, DateTime eventTime)
         {
             matchResult.AddTradeResult(tradeResult);
             bool buySideIsAggressor = orderToMatchBid.CreationTime > orderToMatchAsk.CreationTime;
