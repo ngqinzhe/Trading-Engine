@@ -58,7 +58,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
                 // Think of refactoring this by including it elsewhere
                 var tradeResult = TradeUtilities.CreateTradeAndFills(orderToMatchBid.Current, orderToMatchAsk.Current,
                     fillQuantity, AllocationAlgorithm.Fifo, eventTime);
-                matchResult = MatchResultCreator.UpdateMatchResult(matchResult, tradeResult, orderToMatchBid, orderToMatchAsk, eventTime);
+                MatchResultCreator.UpdateMatchResult(matchResult, tradeResult, orderToMatchBid, orderToMatchAsk, eventTime);
                 // Lets move on!
                 if (tradeResult.BuyFill.IsCompleteFill)
                 {
