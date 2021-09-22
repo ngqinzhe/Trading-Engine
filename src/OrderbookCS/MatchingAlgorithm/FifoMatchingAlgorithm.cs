@@ -20,8 +20,10 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
             var eventTime = DateTime.UtcNow;
             var matchResult = new MatchResult();
 
+            if (!bids.Any() && !asks.Any())
+                throw new MatchException("There are no bids and no asks."); // Can't match without both sides.
             if (!bids.Any() || !asks.Any())
-                throw new MatchException("There are no bids and/or no asks."); // Can't match without both sides.
+                return matchResult;
 
             var bidOrderIterator = new OrderbookEntryIterator(bids);
             var askOrderIterator = new OrderbookEntryIterator(asks);

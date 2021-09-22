@@ -1,5 +1,5 @@
 ﻿using System;
-namespace TradingEngineServer.Orderbook.MatchingAlgorithm.OrderbookIterator
+namespace TradingEngineServer.Orderbook
 {
     public class MatchException : Exception
     {

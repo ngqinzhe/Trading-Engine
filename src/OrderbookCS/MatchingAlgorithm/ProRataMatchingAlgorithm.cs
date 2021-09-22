@@ -20,8 +20,10 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
             var eventTime = DateTime.UtcNow;
             var matchResult = new MatchResult();
 
+            if (!bids.Any() && !asks.Any())
+                throw new MatchException("There are no bids and no asks."); // Can't match without both sides.
             if (!bids.Any() || !asks.Any())
-                throw new MatchException("There are no bids and/or no asks."); // Can't match without both sides.
+                return matchResult;
 
             var reorderedBids = bids.GroupBy(x => x.ParentLimit.Price)
                 .Select(x => x.OrderByDescending(x => x.Current.InitialQuantity).ThenBy(x => x.CreationTime))

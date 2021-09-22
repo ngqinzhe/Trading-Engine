@@ -5,7 +5,6 @@ using System.Text;
 
 using TradingEngineServer.Instrument;
 using TradingEngineServer.Orderbook;
-using TradingEngineServer.Orderbook.MatchingAlgorithm.OrderbookIterator;
 using TradingEngineServer.Orders;
 
 namespace OrderbookCSTest

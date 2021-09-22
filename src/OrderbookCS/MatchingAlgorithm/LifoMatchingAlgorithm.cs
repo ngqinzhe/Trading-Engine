@@ -20,8 +20,10 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
             var eventTime = DateTime.UtcNow;
             var matchResult = new MatchResult();
 
+            if (!bids.Any() && !asks.Any())
+                throw new MatchException("There are no bids and no asks."); // Can't match without both sides.
             if (!bids.Any() || !asks.Any())
-                throw new MatchException("There are no bids and/or no asks."); // Can't match without both sides.
+                return matchResult;
 
             // Cannot guarantee that bids are ordered in last-in-first-out order. Let's go ahead and do that.
             var reorderedBids = bids.GroupBy(x => x.ParentLimit.Price).Select(x => x.OrderByDescending(oe => oe.CreationTime))
