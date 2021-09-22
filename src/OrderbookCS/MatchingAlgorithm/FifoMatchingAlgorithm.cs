@@ -21,7 +21,7 @@ namespace TradingEngineServer.Orderbook.MatchingAlgorithm
             var matchResult = new MatchResult();
 
             if (!bids.Any() || !asks.Any())
-                return matchResult; // Can't match without both sides.
+                throw new MatchException("There are no bids and/or no asks."); // Can't match without both sides.
 
             var bidOrderIterator = new OrderbookEntryIterator(bids);
             var askOrderIterator = new OrderbookEntryIterator(asks);

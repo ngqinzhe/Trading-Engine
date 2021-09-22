@@ -2,6 +2,7 @@
 
 using TradingEngineServer.Instrument;
 using TradingEngineServer.Orderbook;
+using TradingEngineServer.Orderbook.MatchingAlgorithm.OrderbookIterator;
 using TradingEngineServer.Orders;
 
 namespace OrderbookCSTest
@@ -139,6 +140,13 @@ namespace OrderbookCSTest
             Assert.AreEqual(false, fifoOrderbook.ContainsOrder(secondAskOrderOrderId));
             Assert.AreEqual(false, spread.Ask.HasValue);
             Assert.AreEqual(false, spread.Bid.HasValue);
+        }
+
+        [TestMethod]
+        public void FifoOrderbook_MatchNoOrders()
+        {
+            MatchingOrderbook fifoOrderbook = OrderbookFactory.CreateOrderbook(_fifoSecurity);
+            Assert.ThrowsException<MatchException>(() => fifoOrderbook.Match());
         }
     }
 }

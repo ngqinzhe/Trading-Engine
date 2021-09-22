@@ -5,6 +5,7 @@ using System.Text;
 
 using TradingEngineServer.Instrument;
 using TradingEngineServer.Orderbook;
+using TradingEngineServer.Orderbook.MatchingAlgorithm.OrderbookIterator;
 using TradingEngineServer.Orders;
 
 namespace OrderbookCSTest
@@ -212,6 +213,13 @@ namespace OrderbookCSTest
             Assert.AreEqual(true, spread.Ask.HasValue);
             Assert.AreEqual(true, spread.Bid.HasValue);
             Assert.AreEqual(1, spread.Spread.Value);
+        }
+
+        [TestMethod]
+        public void ProRataOrderbook_MatchNoOrders()
+        {
+            MatchingOrderbook prorataOrderbook = OrderbookFactory.CreateOrderbook(_security);
+            Assert.ThrowsException<MatchException>(() => prorataOrderbook.Match());
         }
     }
 }

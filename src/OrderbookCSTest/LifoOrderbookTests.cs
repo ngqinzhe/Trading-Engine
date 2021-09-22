@@ -5,6 +5,7 @@ using System.Text;
 
 using TradingEngineServer.Instrument;
 using TradingEngineServer.Orderbook;
+using TradingEngineServer.Orderbook.MatchingAlgorithm.OrderbookIterator;
 using TradingEngineServer.Orders;
 
 namespace OrderbookCSTest
@@ -175,6 +176,13 @@ namespace OrderbookCSTest
             Assert.AreEqual(false, LifoOrderbook.ContainsOrder(secondAskOrderOrderId));
             Assert.AreEqual(true, spread.Ask.HasValue);
             Assert.AreEqual(false, spread.Bid.HasValue);
+        }
+
+        [TestMethod]
+        public void LifoOrderbook_MatchNoOrders()
+        {
+            MatchingOrderbook LifoOrderbook = OrderbookFactory.CreateOrderbook(_security);
+            Assert.ThrowsException<MatchException>(() => LifoOrderbook.Match());
         }
     }
 }
